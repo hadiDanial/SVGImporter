@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SVGImporter.Types
+namespace SVGImporter.SVG
 {
-    internal enum TagTypes
+    internal enum TagType
     {
-        SVG,
-        G,
-        Rect,
         Circle,
         Ellipse,
+        G,
         Line,
+        Path,
         Polygon,
         Polyline,
-        Path,
+        Rect,
+        SVG,
+        Style,
+        Unknown
     }
 }
