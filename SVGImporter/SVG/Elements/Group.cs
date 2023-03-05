@@ -12,6 +12,11 @@ namespace SVGImporter.SVG.Elements
         {
         }
 
+        public static new ParentElement GetElement(string tagText)
+        {
+            return null;
+        }
+
         public override string GetElementName()
         {
             return "g";

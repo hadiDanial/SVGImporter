@@ -33,9 +33,14 @@ namespace SVGImporter.SVG.Elements
             return "circle";
         }
 
-        protected override string GetElementNameReadable()
+        public override string GetElementNameReadable()
         {
             return "Circle";
+        }
+
+        public static new Circle GetElement(string tagText)
+        {
+            throw new NotImplementedException();
         }
     }
 }

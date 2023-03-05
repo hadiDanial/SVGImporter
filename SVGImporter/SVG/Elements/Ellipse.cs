@@ -37,5 +37,10 @@ namespace SVGImporter.SVG.Elements
         {
             return "Ellipse";
         }
+
+        public static new Ellipse GetElement(string tagText)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,6 +16,11 @@ namespace SVGImporter.SVG.Elements
             return $"<{GetElementName()} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />";
         }
 
+        public static new Polyline GetElement(string tagText)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string GetElementName()
         {
             return "polyline";

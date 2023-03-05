@@ -10,6 +10,11 @@ namespace SVGImporter.SVG.Elements
                 throw new ArgumentException("Polygon must have at least three points");
         }
 
+        public static new Polygon GetElement(string tagText)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string GetElementName()
         {
             return "polygon";

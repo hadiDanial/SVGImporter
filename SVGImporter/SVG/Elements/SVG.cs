@@ -1,7 +1,6 @@
-﻿using SVGImporter.SVG.Elements;
-using SVGImporter.Utility;
+﻿using SVGImporter.Utility;
 
-namespace SVGImporter.SVG
+namespace SVGImporter.SVG.Elements
 {
     public class SVG : ParentElement
     {
@@ -10,6 +9,11 @@ namespace SVGImporter.SVG
         public SVG(string tagText, ViewBox viewBox, List<Attribute> attributes, Vector2 size) : base(tagText, viewBox, attributes)
         {
             this.size = size;
+        }
+
+        public static new ParentElement GetElement(string tagText)
+        {
+            return null;
         }
 
         public override string GetElementName()

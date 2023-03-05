@@ -51,6 +51,6 @@ namespace SVGImporter.SVG.Elements
             stringBuilder.Remove(stringBuilder.Length - 2, 2);
             stringBuilder.Append("}");
             return stringBuilder.ToString();
-        }
+        }        
     }
 }

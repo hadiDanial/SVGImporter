@@ -36,5 +36,10 @@ namespace SVGImporter.SVG.Elements
         {
             return "Rect";
         }
+
+        public static new Rect GetElement(string tagText)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
