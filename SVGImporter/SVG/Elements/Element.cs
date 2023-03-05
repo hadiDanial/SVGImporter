@@ -28,7 +28,48 @@ namespace SVGImporter.SVG.Elements
 
         public static Element CreateElement(string elementName, string tagText)
         {
+            TagType type;
+            if(Enum.TryParse<TagType>(elementName, true, out type))
+            {
+                Console.WriteLine($"{type}: {tagText}");
+                return CreateElementByType(type, tagText);
+            }
+            else
+            {
+                type = TagType.Unknown;
+                return new UnsupportedElement(tagText, null, null);
+            }
             return null;
+        }
+
+        private static Element CreateElementByType(TagType type, string tagText)
+        {
+            switch (type)
+            {
+                case TagType.Circle:
+                    return Circle.GetElement(tagText);
+                case TagType.Ellipse:
+                    return Ellipse.GetElement(tagText);
+                case TagType.G:
+                    return Group.GetElement(tagText);
+                case TagType.Line:
+                    return Line.GetElement(tagText);
+                case TagType.Path:
+                    return Path.GetElement(tagText);
+                case TagType.Polygon:
+                    return Polygon.GetElement(tagText);
+                case TagType.Polyline:
+                    return Polyline.GetElement(tagText);
+                case TagType.Rect:
+                    return Rect.GetElement(tagText);
+                case TagType.SVG:
+                    return SVG.GetElement(tagText);
+                
+                case TagType.Unknown:
+                default:
+                    return UnsupportedElement.GetElement(tagText);
+                    
+            }
         }
 
         /// <summary>
@@ -45,21 +86,15 @@ namespace SVGImporter.SVG.Elements
         /// Convert the element back to an SVG element.
         /// </summary>
         public abstract string ElementToSVGTag();
-        public override abstract string ToString();      
-        
+        public override abstract string ToString();
+        public static Element GetElement(string tagText) => null;
         /// <summary>
         /// Convert the attributes to SVG elements.
         /// </summary>
         /// <returns></returns>
         protected string AttributesToSVG()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (Attribute attribute in attributes)
-            {
-                stringBuilder.Append(attribute);
-                stringBuilder.Append(' ');
-            }
-            return stringBuilder.ToString();
+            return Attribute.AttributesToSVG(attributes);
         }
         
     }
