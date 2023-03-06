@@ -23,6 +23,7 @@ namespace SVGImporter.Elements.Containers
             Console.WriteLine("Content:\n" + content);
             return style;
         }
+
         protected override TagType GetTagType()
         {
             return TagType.Style;

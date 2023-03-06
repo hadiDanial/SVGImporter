@@ -50,7 +50,7 @@ namespace SVGImporter.Elements.Containers
             SVG svg = new SVG(tagText, attributes, new Vector2(width, height), viewBox);
             svg.value = value;
             svg.children = Element.GetElements(content);
-            Console.WriteLine("Content:\n" + content);
+            //Console.WriteLine("Content:\n" + content);
             return svg;
         }
         public override string ElementToSVGTag()

@@ -19,7 +19,7 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {
             return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
-                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>";
+                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>\n";
         }
 
 

@@ -15,7 +15,7 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(GetTagType())} {TagAttribute.AttributesToSVG(attributes)}/>";
+            return $"<{GetElementName(GetTagType())} {TagAttribute.AttributesToSVG(attributes)}/>\n";
         }
 
         public static new Path GetElement(string tagText)

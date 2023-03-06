@@ -19,12 +19,17 @@ namespace SVGImporter.Elements.Containers
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(GetStartTag());
+            stringBuilder.Append('\n');
             stringBuilder.Append(value);
+            stringBuilder.Append('\n');
+
             foreach (Element element in children)
             {
                 stringBuilder.Append(element.ElementToSVGTag());
+                stringBuilder.Append('\n');
             }
             stringBuilder.Append(GetEndTag());
+            stringBuilder.Append('\n');
             return stringBuilder.ToString();
         }
 
