@@ -37,7 +37,7 @@ namespace SVGImporter.Elements.Containers
 
         protected string GetEndTag()
         {
-            return $"<{GetElementName(GetTagType())}>";
+            return $"</{GetElementName(GetTagType())}>";
         }
 
         public override string ToString()
@@ -76,12 +76,18 @@ namespace SVGImporter.Elements.Containers
             index = content.IndexOf(matches[0].Value);
             content = content.Substring(0, index);
 
-            regex = new Regex(GROUP_TAG_PATTERN);
+            regex = new Regex($"^{GROUP_TAG_PATTERN}$");
+            if(content.IndexOf(OPENING_TAG) == -1 && content.IndexOf(CLOSING_TAG) == -1)
+            {
+                value = content.Trim();
+                return;
+            }
             matches = regex.Matches(content);
             value = string.Empty;
             foreach (Match match in matches)
             {
                 string v = match.Groups[4].Value.Trim();
+                //if (match.Groups[0])
                 MatchCollection secondaryMatches = regex.Matches(v);
                 if (secondaryMatches.Count == 0)
                 {
