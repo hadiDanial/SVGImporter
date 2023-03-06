@@ -64,24 +64,29 @@ namespace SVGImporter.Elements.Containers
         protected static string GetOpeningTagRegexPattern(string elementName) => $"<{elementName}( (\r| |\t|\n|.)*?)+>";
         protected static string GetClosingTagRegexPattern(string elementName) => $"< *(\\\\|\\/) *{elementName} *>";
 
-        protected static void GetContentAndAttributes(string tagText, string elementName, TagType tagType, out List<TagAttribute> attributes, out string content, out string value)
+        protected static void GetContentAndAttributes(string tagText, string elementName, TagType tagType, out List<TagAttribute> attributes, out string content, out string value, bool skipChecks = false)
         {
             attributes = TagAttribute.SVGToAttributes(tagText);
 
             Regex regex = new Regex(GetOpeningTagRegexPattern(elementName));
             MatchCollection matches = regex.Matches(tagText);
-            if (matches.Count <= 0) throw new InvalidDataException($"No opening tag found for {elementName}");
-
-            string start = matches[0].Value;
-            int index = tagText.IndexOf(start);
-            content = tagText.Substring(start.Length);
-            regex = new Regex(GetClosingTagRegexPattern(elementName));
-            matches = regex.Matches(tagText);
-            if (matches.Count <= 0) throw new InvalidDataException($"No closing tag found for {GetElementName(tagType)}");
-            index = content.IndexOf(matches[0].Value);
-            content = content.Substring(0, index);
-
-            regex = new Regex($"^{GROUP_TAG_PATTERN}$");
+            if (skipChecks)
+            {
+                content = tagText;
+            }
+            else
+            {
+                if (matches.Count <= 0) throw new InvalidDataException($"No opening tag found for {elementName}");
+                string start = matches[0].Value;
+                int index = tagText.IndexOf(start);
+                content = tagText.Substring(start.Length);
+                regex = new Regex(GetClosingTagRegexPattern(elementName));
+                matches = regex.Matches(tagText);
+                if (matches.Count <= 0) throw new InvalidDataException($"No closing tag found for {GetElementName(tagType)}");
+                index = content.IndexOf(matches[0].Value);
+                content = content.Substring(0, index);
+                regex = new Regex($"^{GROUP_TAG_PATTERN}$");
+            }
             if(content.IndexOf(OPENING_TAG) == -1 && content.IndexOf(CLOSING_TAG) == -1)
             {
                 value = content.Trim();

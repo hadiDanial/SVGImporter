@@ -143,18 +143,20 @@ namespace SVGImporter.Elements
         /// <returns>List of elements</returns>
         protected static List<Element> GetElements(string content)
         {
+            content = content.Replace("\n",string.Empty).Trim(' ');
+            string elementName, firstNameInContent;
+            TagType type;
             List<Element> elements = new List<Element>();
-            //int firstClosingTagIndex = content.IndexOf(CLOSING_TAG);
-            //if (firstClosingTagIndex > -1) content = content.Substring(firstClosingTagIndex);
             Regex regex = new Regex(SINGLE_TAG_PATTERN);
             MatchCollection matches = regex.Matches(content);
             foreach (Match match in matches)
             {
                 string text = match.Value;
-                int firstSpaceIndex = text.IndexOf(' ');
-                int firstOpeningTag = text.IndexOf(OPENING_TAG) + 1;
-                string elementName = text.Substring(firstOpeningTag, firstSpaceIndex).Trim();
-                TagType type;
+                //if (!content.Trim().StartsWith(text.Trim())) continue;
+                firstNameInContent = GetElementNameFromText(content);
+                elementName = GetElementNameFromText(text);
+                Enum.TryParse(firstNameInContent, true, out type);
+                if (IsContainer(type) && !elementName.Equals(firstNameInContent) && IsInContainer(content, text, type)) continue;
                 if (Enum.TryParse(elementName, true, out type))
                 {
                     Console.WriteLine($"{type}: {text}");
@@ -165,18 +167,72 @@ namespace SVGImporter.Elements
                     type = TagType.Unknown;
                     elements.Add(UnsupportedElement.GetElement(text));
                 }
-                content = content.Replace(text, string.Empty);
+                content = content.Replace(text, string.Empty).Trim(' ');
             }
             regex = new Regex(GROUP_TAG_PATTERN);
+            content = content.Trim();
 
-            matches = regex.Matches(content);
-            foreach (Match match in matches)
+            //matches = regex.Matches(content);
+            elementName = GetElementNameFromText(content);
+
+            if (Enum.TryParse(elementName, true, out type))
             {
-                elements.Add(Element.CreateElementByType(GetTypeByName(match.Groups[1].Value), match.Value));
-                
+                if (IsContainer(type))
+                    elements.Add(CreateElementByType(type, GetContainerContent(content, type)));
             }
-            
+            //foreach (Match match in matchesList)
+            //{
+            //    elements.Add(Element.CreateElementByType(GetTypeByName(match.Groups[1].Value), match.Value));
+
+            //}
+
             return elements;
+        }
+
+        private static bool IsInContainer(string content, string text, TagType type)
+        {
+            int containerEndIndex = content.IndexOf($"</{GetElementName(type)}");
+            int textStartIndex = content.IndexOf(text);
+            return textStartIndex < containerEndIndex;
+        }
+
+        private static bool IsContainer(TagType type)
+        {
+            switch (type)
+            {
+                case TagType.Circle:
+                case TagType.Ellipse:
+                case TagType.Line:
+                case TagType.Path:
+                case TagType.Polygon:
+                case TagType.Polyline:
+                case TagType.Rect:
+                    return false;
+                case TagType.G:
+                case TagType.SVG:
+                case TagType.Style:
+                case TagType.Unknown:
+                default:
+                    return true;
+            }
+        }
+
+        private static string GetContainerContent(string content, TagType type)
+        {
+            string name = Element.GetElementName(type);
+            int firstIndexName = content.IndexOf($"<{name}");
+            int firstIndexClosing = content.IndexOf(">",firstIndexName);
+            int lastIndexName = content.IndexOf($"/{name}", firstIndexClosing);
+            return content.Substring(firstIndexClosing, lastIndexName - firstIndexClosing - 1);
+        }
+
+        private static string GetElementNameFromText(string text)
+        {
+            int firstOpeningTag = text.IndexOf(OPENING_TAG) + 1;
+            int firstSpaceIndex = text.IndexOf(' ', firstOpeningTag);
+            if (firstSpaceIndex == -1 || firstOpeningTag == -1) return text;
+            string elementName = text.Substring(firstOpeningTag, firstSpaceIndex).Trim();
+            return elementName;
         }
 
         /// <summary>

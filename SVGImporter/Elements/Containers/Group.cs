@@ -17,7 +17,7 @@ namespace SVGImporter.Elements.Containers
         {
             List<TagAttribute> attributes;
             string content, value;
-            GetContentAndAttributes(tagText, GetElementName(TagType.G), TagType.G, out attributes, out content, out value);
+            GetContentAndAttributes(tagText, GetElementName(TagType.G), TagType.G, out attributes, out content, out value, true);
 
             Group group = new Group(tagText, attributes);
             group.children = Element.GetElements(content);
