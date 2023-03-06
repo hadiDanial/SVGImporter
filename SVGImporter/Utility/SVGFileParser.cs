@@ -1,4 +1,5 @@
-﻿using SVGImporter.Elements.Containers;
+﻿using SVGImporter.Elements;
+using SVGImporter.Elements.Containers;
 
 namespace SVGImporter.Utility
 {
@@ -30,7 +31,16 @@ namespace SVGImporter.Utility
                 throw new InvalidDataException("No <svg> tag found!");
             }
             svgText = svgText.Substring(start);
-            SVG svgElement = SVG.GetElement(svgText);
+            SVG svgElement = (SVG)Element.GetElement(svgText);
+
+            Console.WriteLine("\n\nSVG:\n");
+            foreach (Element element in svgElement.Children)
+            {
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine("Element To SVG:\n");
+            Console.WriteLine(svgElement.ElementToSVGTag());
 
             //List<Element> elements = new List<Element>();
             //string[] lines = svgText.Split(CLOSING_TAG);
