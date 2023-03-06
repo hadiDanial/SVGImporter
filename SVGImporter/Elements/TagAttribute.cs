@@ -13,7 +13,7 @@ namespace SVGImporter.Elements
     {
         public string attributeName;
         public string attributeValue;
-        private const string PATTERN = "[ ]([A-Z]|[a-z]|[0-9])+=\"([A-Z]|[a-z]|[0-9]|[ ])+\"";
+        private const string PATTERN = "(\\S+)=[\"']?((?:.(?![\"']?\\s+(?:\\S+)=|\\s*\\/?[>\"']))+.)[\"']?";//"( *)([A-Z]|[a-z]|[0-9])+=\"([A-Z]|[a-z]|[0-9]|( *))+\"";
 
         public TagAttribute(string attributeName, string attributeValue)
         {
