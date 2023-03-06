@@ -15,43 +15,57 @@ namespace SVGImporter.Elements.Containers
             this.viewBox = viewBox;
         }
 
+
         public static new SVG GetElement(string tagText)
         {
-            string pattern = GetRegexPattern(GetElementName());
-            Console.WriteLine(pattern);
-            Regex regex = new Regex(pattern);
-            MatchCollection matches = regex.Matches(tagText);
-            foreach (Match match in matches)
+            List<TagAttribute> attributes;
+            string content, value;
+            GetContentAndAttributes(tagText, GetElementName(TagType.SVG), TagType.SVG, out attributes, out content, out value);
+
+            ViewBox viewBox = new ViewBox();
+            float width = 0, height = 0, vWidth = 0, vHeight = 0, minX = 0, minY = 0, val;
+            foreach (TagAttribute attribute in attributes)
             {
-                Console.WriteLine("Match Complete:\n" + match.Value + "\n______\n");
+                if (attribute.attributeName.Equals("width") && float.TryParse(attribute.attributeValue, out val))
+                    width = val;
+                if (attribute.attributeName.Equals("height") && float.TryParse(attribute.attributeValue, out val))
+                    height = val;
+                if (attribute.attributeName.Equals("viewBox"))
+                {
+                    string[] values = attribute.attributeValue.Split(' ');
+                    if (values == null || values.Length != 4)
+                        throw new InvalidDataException($"Invalid ViewBox values for {GetElementName(TagType.SVG)}");
+                    if (float.TryParse(attribute.attributeValue, out val))
+                        minX = val;
+                    if (float.TryParse(attribute.attributeValue, out val))
+                        minY = val;
+                    if (float.TryParse(attribute.attributeValue, out val))
+                        vWidth = val;
+                    if (float.TryParse(attribute.attributeValue, out val))
+                        vHeight = val;
+                    viewBox = new ViewBox(new Vector2(vWidth, vHeight), new Vector2(minX, minY));
+                }
+
             }
-            regex = new Regex(GetOpeningTagRegexPattern(GetElementName()));
-            matches = regex.Matches(tagText);
-            if (matches.Count <= 0) throw new InvalidDataException($"No opening tag found for {GetElementName()}");
-
-            string start = matches[0].Value;
-            int index = tagText.IndexOf(start);
-            string content = tagText.Substring(start.Length);
-            regex = new Regex(GetClosingTagRegexPattern(GetElementName()));
-            matches = regex.Matches(tagText);
-            if (matches.Count <= 0) throw new InvalidDataException($"No closing tag found for {GetElementName()}");
-            index = content.IndexOf(matches[0].Value);
-            content = content.Substring(0, index);
-
+            SVG svg = new SVG(tagText, attributes, new Vector2(width, height), viewBox);
+            svg.value = value;
+            svg.children = Element.GetElements(content);
             Console.WriteLine("Content:\n" + content);
-
-
-            return null;
+            return svg;
         }
-
-        public new static string GetElementName()
+        public override string ElementToSVGTag()
         {
-            return "svg";
+            return base.ElementToSVGTag();
         }
 
         public new static string GetElementNameReadable()
         {
             return "SVG";
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.SVG;
         }
     }
 }
