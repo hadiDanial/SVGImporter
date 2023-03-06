@@ -15,12 +15,13 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            throw new NotImplementedException();
+            return $"<{GetElementName(GetTagType())} {TagAttribute.AttributesToSVG(attributes)}/>";
         }
 
         public static new Path GetElement(string tagText)
         {
-            throw new NotImplementedException();
+            return new Path(tagText, new List<TagAttribute>());
+            //throw new NotImplementedException();
         }
 
         public new static string GetElementNameReadable()
@@ -30,6 +31,7 @@ namespace SVGImporter.Elements
 
         public override string ToString()
         {
+            return "Path-NotImplemented";
             throw new NotImplementedException();
         }
 
