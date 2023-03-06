@@ -16,17 +16,12 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName()} cx=\"{center.x}\" cy=\"{center.y}\" r=\"{radius}\" {AttributesToSVG()}/>";
+            return $"<{GetElementName(TagType.Circle)} cx=\"{center.x}\" cy=\"{center.y}\" r=\"{radius}\" {AttributesToSVG()}/>";
         }
 
         public override string ToString()
         {
             return $"{GetElementNameReadable()}: {center}, R = {radius}";
-        }
-
-        public new static string GetElementName()
-        {
-            return "circle";
         }
 
         public new static string GetElementNameReadable()
@@ -47,12 +42,16 @@ namespace SVGImporter.Elements
                     y = val;
                 if (attribute.attributeName.Equals("r") && float.TryParse(attribute.attributeValue, out val))
                     r = val;
-
             }
             Vector2 center = new Vector2(x, y);
 
             Circle circle = new Circle(tagText, center, r, attributes);
             return circle;
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Circle;
         }
     }
 }

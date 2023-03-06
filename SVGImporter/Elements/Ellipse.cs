@@ -15,7 +15,7 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName()} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG()}/>";
+            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG()}/>";
         }
 
         public override string ToString()
@@ -23,10 +23,6 @@ namespace SVGImporter.Elements
             return $"{GetElementNameReadable()}: {center}, R = {radius}";
         }
 
-        public new static string GetElementName()
-        {
-            return "ellipse";
-        }
 
         public new static string GetElementNameReadable()
         {
@@ -57,6 +53,11 @@ namespace SVGImporter.Elements
 
             Ellipse ellipse = new Ellipse(tagText, center, radius, attributes);
             return ellipse;
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Ellipse;
         }
     }
 }

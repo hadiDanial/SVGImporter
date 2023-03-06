@@ -14,7 +14,7 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName()} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />";
+            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />";
         }
 
         public static new Polyline GetElement(string tagText)
@@ -48,11 +48,6 @@ namespace SVGImporter.Elements
             return line;
         }
 
-        public new static string GetElementName()
-        {
-            return "polyline";
-        }
-
         public new static string GetElementNameReadable()
         {
             return "Polyline";
@@ -61,6 +56,11 @@ namespace SVGImporter.Elements
         public override string ToString()
         {
             return $"{GetElementNameReadable()}: {points}";
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Polyline;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName()} x1=\"{point1.x}\" y1=\"{point1.y}\" x2=\"{point2.x}\" y2=\"{point2.y}\" {AttributesToSVG()} />";
+            return $"<{GetElementName(TagType.Line)} x1=\"{point1.x}\" y1=\"{point1.y}\" x2=\"{point2.x}\" y2=\"{point2.y}\" {AttributesToSVG()}/>";
         }
 
         public static new Line GetElement(string tagText)
@@ -41,11 +41,6 @@ namespace SVGImporter.Elements
             return line;
         }
 
-        public new static string GetElementName()
-        {
-            return "line";
-        }
-
         public new static string GetElementNameReadable()
         {
             return "Line";
@@ -54,6 +49,11 @@ namespace SVGImporter.Elements
         public override string ToString()
         {
             return $"{GetElementNameReadable()}: {point1}, {point2}";
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Line;
         }
     }
 }

@@ -23,11 +23,6 @@ namespace SVGImporter.Elements
             throw new NotImplementedException();
         }
 
-        public new static string GetElementName()
-        {
-            return "path";
-        }
-
         public new static string GetElementNameReadable()
         {
             return "Path";
@@ -36,6 +31,11 @@ namespace SVGImporter.Elements
         public override string ToString()
         {
             throw new NotImplementedException();
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Path;
         }
     }
 }

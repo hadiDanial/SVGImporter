@@ -18,14 +18,10 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName()} x=\"{position.x}\" y=\"{position.y}\" " +
+            return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
                 $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>";
         }
 
-        public new static string GetElementName()
-        {
-            return "rect";
-        }
 
         public override string ToString()
         {
@@ -63,6 +59,11 @@ namespace SVGImporter.Elements
 
             Rect rect = new Rect(tagText, attributes, position, size, radius);
             return rect;
+        }
+
+        protected override TagType GetTagType()
+        {
+            return TagType.Rect;
         }
     }
 }

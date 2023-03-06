@@ -19,14 +19,17 @@ namespace SVGImporter.Elements
             return polygon;
         }
 
-        public new static string GetElementName()
+        public override string ElementToSVGTag()
         {
-            return "polygon";
+            return $"<{GetElementName(TagType.Polygon)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />";
         }
-
         public new static string GetElementNameReadable()
         {
             return "Polygon";
+        }
+        protected override TagType GetTagType()
+        {
+            return TagType.Polygon;
         }
     }
 }
