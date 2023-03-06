@@ -1,17 +1,13 @@
 ﻿using SVGImporter.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SVGImporter.SVG.Elements
+
+namespace SVGImporter.Elements
 {
     internal class Line : Element
     {
         private Vector2 point1, point2;
 
-        public Line(string tagText, Vector2 point1, Vector2 point2, List<Attribute> attributes) : base(tagText, attributes)
+        protected Line(string tagText, Vector2 point1, Vector2 point2, List<TagAttribute> attributes) : base(tagText, attributes)
         {
             this.point1 = point1;
             this.point2 = point2;
@@ -24,10 +20,10 @@ namespace SVGImporter.SVG.Elements
 
         public static new Line GetElement(string tagText)
         {
-            List<Attribute> attributes = Attribute.SVGToAttributes(tagText);
+            List<TagAttribute> attributes = TagAttribute.SVGToAttributes(tagText);
             float x1 = 0, y1 = 0, x2 = 0, y2 = 0;
             float val;
-            foreach (Attribute attribute in attributes)
+            foreach (TagAttribute attribute in attributes)
             {
                 if (attribute.attributeName.Equals("x1") && float.TryParse(attribute.attributeValue, out val))
                     x1 = val;
@@ -41,16 +37,16 @@ namespace SVGImporter.SVG.Elements
             Vector2 p1 = new Vector2(x1, y1);
             Vector2 p2 = new Vector2(x2, y2);
 
-            Line line = new Line(tagText, null, p1, p2, attributes);
+            Line line = new Line(tagText, p1, p2, attributes);
             return line;
         }
 
-        public override string GetElementName()
+        public new static string GetElementName()
         {
             return "line";
         }
 
-        public override string GetElementNameReadable()
+        public new static string GetElementNameReadable()
         {
             return "Line";
         }

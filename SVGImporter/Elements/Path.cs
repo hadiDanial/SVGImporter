@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SVGImporter.Elements;
 
-namespace SVGImporter.SVG.Elements
+namespace SVGImporter.Elements
 {
     internal class Path : Element
     {
-        public Path(string tagText, List<Attribute> attributes) : base(tagText, attributes)
+        protected Path(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
         {
         }
 
@@ -22,14 +23,14 @@ namespace SVGImporter.SVG.Elements
             throw new NotImplementedException();
         }
 
-        public override string GetElementName()
+        public new static string GetElementName()
         {
-            throw new NotImplementedException();
+            return "path";
         }
 
-        public override string GetElementNameReadable()
+        public new static string GetElementNameReadable()
         {
-            throw new NotImplementedException();
+            return "Path";
         }
 
         public override string ToString()

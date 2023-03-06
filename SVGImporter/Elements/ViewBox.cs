@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SVGImporter.Utility;
 
-namespace SVGImporter.SVG
+namespace SVGImporter.Elements
 {
     public class ViewBox
     {

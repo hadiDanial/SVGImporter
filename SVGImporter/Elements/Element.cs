@@ -1,33 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SVGImporter.Elements.Containers;
 
-namespace SVGImporter.SVG.Elements
+namespace SVGImporter.Elements
 {
     public abstract class Element
     {
-        protected List<Attribute> attributes;
+        protected List<TagAttribute> attributes;
         protected Style style;
         protected string elementNameReadable, elementName;
         protected string tagText;
-        protected string value;
-      
-        protected Element(string tagText, List<Attribute> attributes)
+        private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
+
+        protected Element(string tagText, List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
-            elementName = GetElementName();
+            elementName = GetElementName(attributes);
             this.attributes = attributes;
             style = new Style();
             this.tagText = tagText;
         }
 
+        private string GetElementName(List<TagAttribute> attributes)
+        {
+            string name = GetElementName();
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                if (attributes[i].attributeName.Equals("id"))
+                    name = attributes[i].attributeValue;
+            }
+            return name;
+        }
 
         public static Element CreateElement(string elementName, string tagText)
         {
+            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
+
             TagType type;
-            if(Enum.TryParse<TagType>(elementName, true, out type))
+            if (Enum.TryParse(elementName, true, out type))
             {
                 Console.WriteLine($"{type}: {tagText}");
                 return CreateElementByType(type, tagText);
@@ -35,7 +43,7 @@ namespace SVGImporter.SVG.Elements
             else
             {
                 type = TagType.Unknown;
-                return new UnsupportedElement(tagText, new List<Attribute>());
+                return Group.GetElement(tagText);
             }
             return null;
         }
@@ -62,24 +70,36 @@ namespace SVGImporter.SVG.Elements
                     return Rect.GetElement(tagText);
                 case TagType.SVG:
                     return SVG.GetElement(tagText);
-                
+
                 case TagType.Unknown:
                 default:
                     return UnsupportedElement.GetElement(tagText);
-                    
+
             }
         }
-
+        private static void SetupDictionary()
+        {
+            tagTypeStringToEnum = new Dictionary<string, TagType>();
+            tagTypeStringToEnum.Add("circle", TagType.Circle);
+            tagTypeStringToEnum.Add("ellipse", TagType.Ellipse);
+            tagTypeStringToEnum.Add("g", TagType.G);
+            tagTypeStringToEnum.Add("line", TagType.Line);
+            tagTypeStringToEnum.Add("path", TagType.Path);
+            tagTypeStringToEnum.Add("polygon", TagType.Polygon);
+            tagTypeStringToEnum.Add("polyline", TagType.Polyline);
+            tagTypeStringToEnum.Add("rect", TagType.Rect);
+            tagTypeStringToEnum.Add("svg", TagType.SVG);
+        }
         /// <summary>
         /// Return the element name as per the SVG specification.
         /// </summary>
-        public abstract string GetElementName();
+        public static string GetElementName() => "Element";
         /// <summary>
         /// Return the element name in a readable form.
         /// </summary>
         /// <returns></returns>
-        public abstract string GetElementNameReadable();
-        
+        public static string GetElementNameReadable() => "Element";
+
         /// <summary>
         /// Convert the element back to an SVG element.
         /// </summary>
@@ -92,8 +112,8 @@ namespace SVGImporter.SVG.Elements
         /// <returns></returns>
         protected string AttributesToSVG()
         {
-            return Attribute.AttributesToSVG(attributes);
+            return TagAttribute.AttributesToSVG(attributes);
         }
-        
+
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SVGImporter.SVG
+namespace SVGImporter.Elements.Containers
 {
     public class Style
     {

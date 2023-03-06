@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SVGImporter.Elements;
 
-namespace SVGImporter.SVG.Elements
+namespace SVGImporter.Elements.Containers
 {
     internal class Group : ParentElement
     {
-        public Group(string tagText, List<Attribute> attributes) : base(tagText, attributes)
+        protected Group(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
         {
         }
 
@@ -17,13 +18,13 @@ namespace SVGImporter.SVG.Elements
             return null;
         }
 
-        public override string GetElementName()
+        public new static string GetElementName()
         {
             return "g";
         }
 
-        public override string GetElementNameReadable()
-        {            
+        public new static string GetElementNameReadable()
+        {
             return "Group";
         }
     }

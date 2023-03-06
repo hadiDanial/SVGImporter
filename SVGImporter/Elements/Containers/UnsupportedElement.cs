@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SVGImporter.Elements;
 
-namespace SVGImporter.SVG.Elements
+namespace SVGImporter.Elements.Containers
 {
     internal class UnsupportedElement : Group
     {
-        public UnsupportedElement(string tagText, List<Attribute> attributes) : base(tagText, attributes)
+        protected UnsupportedElement(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
         {
         }
     }
