@@ -29,7 +29,8 @@ namespace SVGImporter.Elements
         {
             List<TagAttribute> attributes = new List<TagAttribute>();
             Regex regex = new Regex(PATTERN);
-            MatchCollection matches = regex.Matches(tag);
+            string input = tag.Substring(0, tag.IndexOf('>'));
+            MatchCollection matches = regex.Matches(input);
             foreach (Match match in matches)
             {
                 TagAttribute attr = new TagAttribute();
