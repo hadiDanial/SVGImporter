@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SVGImporter.Elements
 {
-    internal enum TagType
+    public enum TagType
     {
         Circle,
         Ellipse,
