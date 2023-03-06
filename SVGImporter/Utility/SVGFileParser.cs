@@ -1,5 +1,7 @@
 ﻿using SVGImporter.Elements;
 using SVGImporter.Elements.Containers;
+using System.ComponentModel;
+using System.IO;
 
 namespace SVGImporter.Utility
 {
@@ -14,14 +16,14 @@ namespace SVGImporter.Utility
             if (path == null || !path.ToLower().EndsWith(EXTENSION)) return;
             if(localPath) path = GetLocalPath(path);
             string svg = File.ReadAllText(path);
-            ReadSVG(svg);
+            ReadSVG(svg, path);
         }
         public static string GetLocalPath(string path)
         {
             return System.IO.Path.Combine(Environment.CurrentDirectory, @path);
         }
 
-        public static void ReadSVG(string svgText)
+        public static void ReadSVG(string svgText, string path)
         {
             svgText = svgText.Replace("\r\n", string.Empty);
 
@@ -33,36 +35,16 @@ namespace SVGImporter.Utility
             svgText = svgText.Substring(start);
             SVG svgElement = (SVG)Element.GetElement(svgText);
 
-            Console.WriteLine("\n\nSVG:\n");
-            foreach (Element element in svgElement.Children)
-            {
-                Console.WriteLine(element);
-            }
-
             Console.WriteLine("Element To SVG:\n");
             Console.WriteLine(svgElement.ElementToSVGTag());
+            SaveFile(svgElement.ElementToSVGTag(), path);
+        }
 
-            //List<Element> elements = new List<Element>();
-            //string[] lines = svgText.Split(CLOSING_TAG);
-            //for (int i = 0; i < lines.Length; i++)
-            //{
-            //    lines[i] += ">";
-            //    int index = lines[i].IndexOf(" ");
-            //    if(index == -1)
-            //    {
-            //        Console.WriteLine($"NO TAG LINE: {lines[i]}");
-            //        continue;
-            //    }
-            //    string type = lines[i].Substring(lines[i].IndexOf(OPENING_TAG) + 1, index).Trim();
-            //    Element element = Element.CreateElement(type, lines[i]);
-            //    elements.Add(element);
-            //    Console.WriteLine(element + " - DONE");
-            //}
-
-            //svg = svg.Substring(svg.IndexOf(svgStart));
-            //svg = svg.Substring(svg.IndexOf(">") + 1);
-            //string line = svg.Substring(svg.IndexOf("<line"));
-            //line = svg.Substring(svg.IndexOf("/>"));
+        public static void SaveFile(string generatedSVG, string path, bool localPath = true)
+        {
+            if (path == null || !path.ToLower().EndsWith(EXTENSION)) return;
+            if (localPath) path = GetLocalPath(path);
+            File.WriteAllText(path.Insert(path.IndexOf(EXTENSION),"_NEW"), generatedSVG);            
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SVGImporter
     {
         static void Main(string[] args)
         {
-            SVGFileParser.ReadFile("Resources/Line.svg");
+            SVGFileParser.ReadFile("Resources/test.svg");
         }
     }
 }
