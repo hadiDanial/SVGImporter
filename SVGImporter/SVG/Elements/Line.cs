@@ -11,7 +11,7 @@ namespace SVGImporter.SVG.Elements
     {
         private Vector2 point1, point2;
 
-        public Line(string tagText, ViewBox viewBox, Vector2 point1, Vector2 point2, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public Line(string tagText, Vector2 point1, Vector2 point2, List<Attribute> attributes) : base(tagText, attributes)
         {
             this.point1 = point1;
             this.point2 = point2;

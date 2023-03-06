@@ -8,7 +8,7 @@ namespace SVGImporter.SVG.Elements
         private Vector2 size;
         private Vector2 cornerRadius;
 
-        public Rect(string tagText, ViewBox viewBox, List<Attribute> attributes, Vector2 position, Vector2 size, Vector2 cornerRadius) : base(tagText, viewBox, attributes)
+        public Rect(string tagText, List<Attribute> attributes, Vector2 position, Vector2 size, Vector2 cornerRadius) : base(tagText, attributes)
         {
             this.position = position;
             this.size = size;

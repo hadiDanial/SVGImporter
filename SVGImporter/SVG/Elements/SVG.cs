@@ -5,10 +5,12 @@ namespace SVGImporter.SVG.Elements
     public class SVG : ParentElement
     {
         private Vector2 size;
+        private ViewBox viewBox;
 
-        public SVG(string tagText, ViewBox viewBox, List<Attribute> attributes, Vector2 size) : base(tagText, viewBox, attributes)
+        public SVG(string tagText, List<Attribute> attributes, Vector2 size, ViewBox viewBox) : base(tagText, attributes)
         {
             this.size = size;
+            this.viewBox = viewBox;
         }
 
         public static new ParentElement GetElement(string tagText)

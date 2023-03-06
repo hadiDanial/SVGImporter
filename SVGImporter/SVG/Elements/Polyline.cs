@@ -6,7 +6,7 @@ namespace SVGImporter.SVG.Elements
     {
         protected List<Vector2> points;
 
-        public Polyline(string tagText, ViewBox viewBox, List<Attribute> attributes, List<Vector2> points) : base(tagText, viewBox, attributes)
+        public Polyline(string tagText, List<Attribute> attributes, List<Vector2> points) : base(tagText, attributes)
         {
             this.points = points;
         }

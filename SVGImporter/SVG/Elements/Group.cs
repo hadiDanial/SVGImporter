@@ -8,7 +8,7 @@ namespace SVGImporter.SVG.Elements
 {
     internal class Group : ParentElement
     {
-        public Group(string tagText, ViewBox viewBox, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public Group(string tagText, List<Attribute> attributes) : base(tagText, attributes)
         {
         }
 

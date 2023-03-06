@@ -8,7 +8,7 @@ namespace SVGImporter.SVG.Elements
 {
     internal class Path : Element
     {
-        public Path(string tagText, ViewBox viewBox, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public Path(string tagText, List<Attribute> attributes) : base(tagText, attributes)
         {
         }
 

@@ -8,7 +8,7 @@ namespace SVGImporter.SVG.Elements
 {
     internal class UnsupportedElement : Group
     {
-        public UnsupportedElement(string tagText, ViewBox viewBox, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public UnsupportedElement(string tagText, List<Attribute> attributes) : base(tagText, attributes)
         {
         }
     }

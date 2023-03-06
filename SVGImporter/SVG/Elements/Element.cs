@@ -13,16 +13,14 @@ namespace SVGImporter.SVG.Elements
         protected string elementNameReadable, elementName;
         protected string tagText;
         protected string value;
-        protected ViewBox viewBox;
       
-        protected Element(string tagText, ViewBox viewBox, List<Attribute> attributes)
+        protected Element(string tagText, List<Attribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
             elementName = GetElementName();
             this.attributes = attributes;
             style = new Style();
             this.tagText = tagText;
-            this.viewBox = viewBox;
         }
 
 
@@ -37,7 +35,7 @@ namespace SVGImporter.SVG.Elements
             else
             {
                 type = TagType.Unknown;
-                return new UnsupportedElement(tagText, null, null);
+                return new UnsupportedElement(tagText, new List<Attribute>());
             }
             return null;
         }

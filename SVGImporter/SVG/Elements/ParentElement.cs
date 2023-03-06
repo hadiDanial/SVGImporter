@@ -10,7 +10,7 @@ namespace SVGImporter.SVG.Elements
     {
         protected List<Element> children;
 
-        public ParentElement(string tagText, ViewBox viewBox, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public ParentElement(string tagText, List<Attribute> attributes) : base(tagText, attributes)
         {
             children = new List<Element>();
         }

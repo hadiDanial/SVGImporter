@@ -12,7 +12,7 @@ namespace SVGImporter.SVG.Elements
         private Vector2 center;
         private float radius;
 
-        public Circle(string tagText, ViewBox viewBox, Vector2 center, float radius, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public Circle(string tagText, Vector2 center, float radius, List<Attribute> attributes) : base(tagText, attributes)
         {
             this.center = center;
             this.radius = radius;

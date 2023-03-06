@@ -12,7 +12,7 @@ namespace SVGImporter.SVG.Elements
         private Vector2 center;
         private Vector2 radius;
 
-        public Ellipse(string tagText, ViewBox viewBox, Vector2 center, Vector2 radius, List<Attribute> attributes) : base(tagText, viewBox, attributes)
+        public Ellipse(string tagText, Vector2 center, Vector2 radius, List<Attribute> attributes) : base(tagText, attributes)
         {  
             this.center = center;
             this.radius = radius;           
