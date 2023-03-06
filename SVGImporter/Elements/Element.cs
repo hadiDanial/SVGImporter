@@ -8,7 +8,7 @@ namespace SVGImporter.Elements
     {
         protected List<TagAttribute> attributes;
         protected Style style;
-        protected string elementNameReadable, elementName;
+        protected string elementNameReadable, elementName, elementId;
         protected string tagText;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
         protected const string OPENING_TAG = "<";
@@ -18,12 +18,13 @@ namespace SVGImporter.Elements
         protected Element(string tagText, List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
-            elementName = GetElementName(attributes);
+            elementName = GetElementName(GetTagType());
+            elementId = GetCustomName(attributes);
             this.attributes = attributes;
             this.tagText = tagText;
         }
 
-        private string GetElementName(List<TagAttribute> attributes)
+        private string GetCustomName(List<TagAttribute> attributes)
         {
             string name = GetElementName(GetTagType());
             for (int i = 0; i < attributes.Count; i++)
@@ -77,6 +78,12 @@ namespace SVGImporter.Elements
             tagTypeStringToEnum.Add("polyline", TagType.Polyline);
             tagTypeStringToEnum.Add("rect", TagType.Rect);
             tagTypeStringToEnum.Add("svg", TagType.SVG);
+            tagTypeStringToEnum.Add("style", TagType.Style);
+        }
+        public static TagType GetTypeByName(string name)
+        {
+            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
+            return tagTypeStringToEnum[name];
         }
         /// <summary>
         /// Return the element name as per the SVG specification.
@@ -137,8 +144,8 @@ namespace SVGImporter.Elements
         protected static List<Element> GetElements(string content)
         {
             List<Element> elements = new List<Element>();
-            int firstClosingTagIndex = content.IndexOf(CLOSING_TAG);
-            if (firstClosingTagIndex > -1) content = content.Substring(firstClosingTagIndex);
+            //int firstClosingTagIndex = content.IndexOf(CLOSING_TAG);
+            //if (firstClosingTagIndex > -1) content = content.Substring(firstClosingTagIndex);
             Regex regex = new Regex(SINGLE_TAG_PATTERN);
             MatchCollection matches = regex.Matches(content);
             foreach (Match match in matches)
@@ -165,7 +172,8 @@ namespace SVGImporter.Elements
             matches = regex.Matches(content);
             foreach (Match match in matches)
             {
-                elements.AddRange(GetElements(match.Value));
+                elements.Add(Element.CreateElementByType(GetTypeByName(match.Groups[1].Value), match.Value));
+                
             }
             
             return elements;
