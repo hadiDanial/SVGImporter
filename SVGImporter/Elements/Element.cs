@@ -1,4 +1,6 @@
 ﻿using SVGImporter.Elements.Containers;
+using System;
+using System.Text.RegularExpressions;
 
 namespace SVGImporter.Elements
 {
@@ -9,19 +11,21 @@ namespace SVGImporter.Elements
         protected string elementNameReadable, elementName;
         protected string tagText;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
-
+        protected const string OPENING_TAG = "<";
+        protected const string CLOSING_TAG = ">";
+        protected const string SINGLE_TAG_PATTERN = "<\\w+( ([^<])*?)+? *?(\\/|\\\\)>";
+        protected const string GROUP_TAG_PATTERN = "<(\\w+)( (\\r| |\\t|\\n|.)*?)+>((\\r| |\\t|\\n|.)*?)<(\\\\|\\/)\\1+>";
         protected Element(string tagText, List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
             elementName = GetElementName(attributes);
             this.attributes = attributes;
-            style = new Style();
             this.tagText = tagText;
         }
 
         private string GetElementName(List<TagAttribute> attributes)
         {
-            string name = GetElementName();
+            string name = GetElementName(GetTagType());
             for (int i = 0; i < attributes.Count; i++)
             {
                 if (attributes[i].attributeName.Equals("id"))
@@ -30,23 +34,6 @@ namespace SVGImporter.Elements
             return name;
         }
 
-        public static Element CreateElement(string elementName, string tagText)
-        {
-            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
-
-            TagType type;
-            if (Enum.TryParse(elementName, true, out type))
-            {
-                Console.WriteLine($"{type}: {tagText}");
-                return CreateElementByType(type, tagText);
-            }
-            else
-            {
-                type = TagType.Unknown;
-                return Group.GetElement(tagText);
-            }
-            return null;
-        }
 
         private static Element CreateElementByType(TagType type, string tagText)
         {
@@ -57,7 +44,7 @@ namespace SVGImporter.Elements
                 case TagType.Ellipse:
                     return Ellipse.GetElement(tagText);
                 case TagType.G:
-                    return Group.GetElement(tagText);
+                    return Containers.Group.GetElement(tagText);
                 case TagType.Line:
                     return Line.GetElement(tagText);
                 case TagType.Path:
@@ -70,7 +57,8 @@ namespace SVGImporter.Elements
                     return Rect.GetElement(tagText);
                 case TagType.SVG:
                     return SVG.GetElement(tagText);
-
+                case TagType.Style:
+                    return Style.GetElement(tagText);
                 case TagType.Unknown:
                 default:
                     return UnsupportedElement.GetElement(tagText);
@@ -93,7 +81,15 @@ namespace SVGImporter.Elements
         /// <summary>
         /// Return the element name as per the SVG specification.
         /// </summary>
-        public static string GetElementName() => "Element";
+        public static string GetElementName(TagType tagType)
+        {
+            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
+            foreach (string key in tagTypeStringToEnum.Keys)
+            {
+                if (tagTypeStringToEnum[key] == tagType) return key;
+            }
+            return "Element";
+        }
         /// <summary>
         /// Return the element name in a readable form.
         /// </summary>
@@ -105,7 +101,76 @@ namespace SVGImporter.Elements
         /// </summary>
         public abstract string ElementToSVGTag();
         public override abstract string ToString();
-        public static Element GetElement(string tagText) => null;
+
+        /// <summary>
+        /// Create an element from a given SVG tag.
+        /// </summary>
+        /// <param name="tagText">A single SVG tag, which may or may not include content.</param>
+        public static Element GetElement(string tagText)
+        {
+            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
+            tagText = tagText.Trim();
+
+            int firstSpaceIndex = tagText.IndexOf(' ');
+            int firstClosingTagIndex = tagText.IndexOf(OPENING_TAG) + 1;
+            string elementName = tagText.Substring(firstClosingTagIndex, firstSpaceIndex).Trim();
+            TagType type;
+            if (Enum.TryParse(elementName, true, out type))
+            {
+                Console.WriteLine($"{type}: {tagText}");
+                return CreateElementByType(type, tagText);
+            }
+            else
+            {
+                type = TagType.Unknown;
+                Console.WriteLine($"NA: {type}: {tagText}");
+                return UnsupportedElement.GetElement(tagText);
+            }
+        }
+
+
+        /// <summary>
+        /// Get a list of all elements contained in the content.
+        /// </summary>
+        /// <param name="content">A string containing several SVG tags.</param>
+        /// <returns>List of elements</returns>
+        protected static List<Element> GetElements(string content)
+        {
+            List<Element> elements = new List<Element>();
+            int firstClosingTagIndex = content.IndexOf(CLOSING_TAG);
+            if (firstClosingTagIndex > -1) content = content.Substring(firstClosingTagIndex);
+            Regex regex = new Regex(SINGLE_TAG_PATTERN);
+            MatchCollection matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+                string text = match.Value;
+                int firstSpaceIndex = text.IndexOf(' ');
+                int firstOpeningTag = text.IndexOf(OPENING_TAG) + 1;
+                string elementName = text.Substring(firstOpeningTag, firstSpaceIndex).Trim();
+                TagType type;
+                if (Enum.TryParse(elementName, true, out type))
+                {
+                    Console.WriteLine($"{type}: {text}");
+                    elements.Add(CreateElementByType(type, text));
+                }
+                else
+                {
+                    type = TagType.Unknown;
+                    elements.Add(UnsupportedElement.GetElement(text));
+                }
+                content = content.Replace(text, string.Empty);
+            }
+            regex = new Regex(GROUP_TAG_PATTERN);
+
+            matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+                elements.AddRange(GetElements(match.Value));
+            }
+            
+            return elements;
+        }
+
         /// <summary>
         /// Convert the attributes to SVG elements.
         /// </summary>
@@ -115,5 +180,6 @@ namespace SVGImporter.Elements
             return TagAttribute.AttributesToSVG(attributes);
         }
 
+        protected abstract TagType GetTagType();
     }
 }
