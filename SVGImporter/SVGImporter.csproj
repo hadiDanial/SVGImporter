@@ -11,6 +11,9 @@
     <None Update="Resources\Line.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\NewTux.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\test.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
