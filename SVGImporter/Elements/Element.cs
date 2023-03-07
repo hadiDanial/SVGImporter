@@ -34,7 +34,7 @@ namespace SVGImporter.Elements
         }
 
 
-        internal static Element CreateElement(TagType type, string tagText, List<TagAttribute> attributes)
+        internal static Element CreateElement(TagType type, List<TagAttribute> attributes, string localName)
         {
             switch (type)
             {
@@ -60,7 +60,7 @@ namespace SVGImporter.Elements
                     return new Style(attributes);
                 case TagType.Unknown:
                 default:
-                    return new UnsupportedElement(attributes);
+                    return new UnsupportedElement(attributes, localName);
 
             }
         }
@@ -82,7 +82,9 @@ namespace SVGImporter.Elements
         public static TagType GetTypeByName(string name)
         {
             if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
-            return tagTypeStringToEnum[name];
+            if(tagTypeStringToEnum.ContainsKey(name))
+                return tagTypeStringToEnum[name];
+            return TagType.Unknown;
         }
         /// <summary>
         /// Return the element name as per the SVG specification.

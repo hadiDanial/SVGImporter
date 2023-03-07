@@ -35,22 +35,22 @@ namespace SVGImporter.Utility
             var doc = XDocument.Parse(svgText);
             XElement root = doc.Root;
             XNamespace xNamespace = root.GetDefaultNamespace();
-            Element svg = ParseDocumentRecusrively(root, xNamespace);
+            Element svg = ParseDocumentRecusrively(root);
             return svg;
         }
 
-        private static Element ParseDocumentRecusrively(XElement root, XNamespace xNamespace)
+        private static Element ParseDocumentRecusrively(XElement root)
         {
             TagType type = Element.GetTypeByName(root.Name.LocalName);
             List<TagAttribute> attributes = TagAttribute.FromXElementAttributes(root.Attributes());
-            Element createdElement = Element.CreateElement(type, root.Value, attributes);
+            Element createdElement = Element.CreateElement(type, attributes, root.Name.LocalName);
             if (root.HasElements)
             {
                 List<Element> elementsList = new List<Element>();
                 var elements = root.Elements();
                 foreach (var element in elements)
                 {
-                    elementsList.Add(ParseDocumentRecusrively(element, xNamespace));
+                    elementsList.Add(ParseDocumentRecusrively(element));
                 }
                 ((ParentElement)createdElement).SetChildren(elementsList);
             }
