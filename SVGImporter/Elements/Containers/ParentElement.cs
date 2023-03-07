@@ -106,5 +106,10 @@ namespace SVGImporter.Elements.Containers
                 }
             }
         }
+
+        internal void SetChildren(List<Element> elementsList)
+        {
+            this.children = elementsList;
+        }
     }
 }
