@@ -17,28 +17,6 @@ namespace SVGImporter.Elements
 
         public Rect(List<TagAttribute> attributes) : base(attributes)
         {
-        }
-
-        public override string ElementToSVGTag()
-        {
-            return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
-                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>\n";
-        }
-
-
-        public override string ToString()
-        {
-            return $"Rect: {position}, size = {size}, corners = {cornerRadius}";
-        }
-
-        public new static string GetElementNameReadable()
-        {
-            return "Rect";
-        }
-
-        public static new Rect GetElement(string tagText)
-        {
-            List<TagAttribute> attributes = TagAttribute.SVGToAttributes(tagText);
             float x = 0, y = 0, width = 0, height = 0, rx = 0, ry = 0;
             float val;
             foreach (TagAttribute attribute in attributes)
@@ -56,12 +34,27 @@ namespace SVGImporter.Elements
                 if (attribute.attributeName.Equals("ry") && float.TryParse(attribute.attributeValue, out val))
                     ry = val;
             }
-            Vector2 position = new Vector2(x, y);
-            Vector2 size = new Vector2(width, height);
-            Vector2 radius = new Vector2(rx, ry);
+            this.position = new Vector2(x, y);
+            this.size = new Vector2(width, height);
+            this.cornerRadius = new Vector2(rx, ry);
 
-            Rect rect = new Rect(attributes, position, size, radius);
-            return rect;
+        }
+
+        public override string ElementToSVGTag()
+        {
+            return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
+                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>\n";
+        }
+
+
+        public override string ToString()
+        {
+            return $"Rect: {position}, size = {size}, corners = {cornerRadius}";
+        }
+
+        public new static string GetElementNameReadable()
+        {
+            return "Rect";
         }
 
         protected override TagType GetTagType()

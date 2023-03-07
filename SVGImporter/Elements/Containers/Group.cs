@@ -13,18 +13,6 @@ namespace SVGImporter.Elements.Containers
         {
         }
 
-        public static new Group GetElement(string tagText)
-        {
-            List<TagAttribute> attributes;
-            string content, value;
-            GetContentAndAttributes(tagText, GetElementName(TagType.G), TagType.G, out attributes, out content, out value, true);
-
-            Group group = new Group(attributes);
-            group.children = Element.GetElements(content);
-            group.value = value;
-            Console.WriteLine("Content:\n" + content);
-            return group;
-        }
 
 
         public new static string GetElementNameReadable()

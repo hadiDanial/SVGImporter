@@ -18,12 +18,6 @@ namespace SVGImporter.Elements
             return $"<{GetElementName(GetTagType())} {TagAttribute.AttributesToSVG(attributes)}/>\n";
         }
 
-        public static new Path GetElement(string tagText)
-        {
-            return new Path(new List<TagAttribute>());
-            //throw new NotImplementedException();
-        }
-
         public new static string GetElementNameReadable()
         {
             return "Path";

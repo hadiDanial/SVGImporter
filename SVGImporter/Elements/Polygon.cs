@@ -15,14 +15,6 @@ namespace SVGImporter.Elements
         {
         }
 
-        public static new Polygon GetElement(string tagText)
-        {
-            Polygon polygon = (Polygon)Polyline.GetElement(tagText);
-            if (polygon.points.Count < 3)
-                throw new ArgumentException("Polygon must have at least three points");
-            return polygon;
-        }
-
         public override string ElementToSVGTag()
         {
             return $"<{GetElementName(TagType.Polygon)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />\n";

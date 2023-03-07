@@ -12,16 +12,9 @@ namespace SVGImporter.Elements.Containers
         internal UnsupportedElement(List<TagAttribute> attributes) : base(attributes)
         {
         }
-
-        public static new UnsupportedElement GetElement(string tagText)
+        protected override TagType GetTagType()
         {
-            List<TagAttribute> attributes;
-            string content, value;
-            GetContentAndAttributes(tagText, GetElementName(TagType.Unknown), TagType.Unknown, out attributes, out content, out value);
-            UnsupportedElement svg = new UnsupportedElement(attributes);
-            svg.children = Element.GetElements(content);
-            Console.WriteLine("Content:\n" + content);
-            return svg;
+            return TagType.Unknown;
         }
     }
 }

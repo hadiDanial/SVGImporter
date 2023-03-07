@@ -16,6 +16,19 @@ namespace SVGImporter.Elements
 
         public Circle(List<TagAttribute> attributes) : base(attributes)
         {
+            float x = 0, y = 0, r = 0;
+            float val;
+            foreach (TagAttribute attribute in attributes)
+            {
+                if (attribute.attributeName.Equals("cx") && float.TryParse(attribute.attributeValue, out val))
+                    x = val;
+                if (attribute.attributeName.Equals("cy") && float.TryParse(attribute.attributeValue, out val))
+                    y = val;
+                if (attribute.attributeName.Equals("r") && float.TryParse(attribute.attributeValue, out val))
+                    r = val;
+            }
+            this.center = new Vector2(x, y);
+            this.radius = r;
         }
 
         public override string ElementToSVGTag()
@@ -31,26 +44,6 @@ namespace SVGImporter.Elements
         public new static string GetElementNameReadable()
         {
             return "Circle";
-        }
-
-        public static new Circle GetElement(string tagText)
-        {
-            List<TagAttribute> attributes = TagAttribute.SVGToAttributes(tagText);
-            float x = 0, y = 0, r = 0;
-            float val;
-            foreach (TagAttribute attribute in attributes)
-            {
-                if (attribute.attributeName.Equals("cx") && float.TryParse(attribute.attributeValue, out val))
-                    x = val;
-                if (attribute.attributeName.Equals("cy") && float.TryParse(attribute.attributeValue, out val))
-                    y = val;
-                if (attribute.attributeName.Equals("r") && float.TryParse(attribute.attributeValue, out val))
-                    r = val;
-            }
-            Vector2 center = new Vector2(x, y);
-
-            Circle circle = new Circle(center, r, attributes);
-            return circle;
         }
 
         protected override TagType GetTagType()

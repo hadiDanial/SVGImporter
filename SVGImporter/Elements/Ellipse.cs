@@ -14,27 +14,6 @@ namespace SVGImporter.Elements
 
         public Ellipse(List<TagAttribute> attributes) : base(attributes)
         {
-        }
-
-        public override string ElementToSVGTag()
-        {
-            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG()}/>\n";
-        }
-
-        public override string ToString()
-        {
-            return $"{GetElementNameReadable()}: {center}, R = {radius}";
-        }
-
-
-        public new static string GetElementNameReadable()
-        {
-            return "Ellipse";
-        }
-
-        public static new Ellipse GetElement(string tagText)
-        {
-            List<TagAttribute> attributes = TagAttribute.SVGToAttributes(tagText);
             float x = 0, y = 0, rx = 0, ry = 0;
             float val;
             foreach (TagAttribute attribute in attributes)
@@ -51,11 +30,24 @@ namespace SVGImporter.Elements
             }
             if (rx == 0 && ry != 0) rx = ry;
             else if (ry == 0 && rx != 0) ry = rx;
-            Vector2 center = new Vector2(x, y);
-            Vector2 radius = new Vector2(rx, ry);
+            this.center = new Vector2(x, y);
+            this.radius = new Vector2(rx, ry);
+        }
 
-            Ellipse ellipse = new Ellipse(center, radius, attributes);
-            return ellipse;
+        public override string ElementToSVGTag()
+        {
+            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG()}/>\n";
+        }
+
+        public override string ToString()
+        {
+            return $"{GetElementNameReadable()}: {center}, R = {radius}";
+        }
+
+
+        public new static string GetElementNameReadable()
+        {
+            return "Ellipse";
         }
 
         protected override TagType GetTagType()

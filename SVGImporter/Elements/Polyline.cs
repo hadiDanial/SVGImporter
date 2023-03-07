@@ -14,16 +14,6 @@ namespace SVGImporter.Elements
 
         public Polyline(List<TagAttribute> attributes) : base(attributes)
         {
-        }
-
-        public override string ElementToSVGTag()
-        {
-            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />\n";
-        }
-
-        public static new Polyline GetElement(string tagText)
-        {
-            List<TagAttribute> attributes = TagAttribute.SVGToAttributes(tagText);
             string points = string.Empty;
             foreach (TagAttribute attribute in attributes)
             {
@@ -48,8 +38,12 @@ namespace SVGImporter.Elements
                 Vector2 point = new Vector2(x, y);
                 pointsList.Add(point);
             }
-            Polyline line = new Polyline(attributes, pointsList);
-            return line;
+            this.points = pointsList;
+        }
+
+        public override string ElementToSVGTag()
+        {
+            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />\n";
         }
 
         public new static string GetElementNameReadable()
