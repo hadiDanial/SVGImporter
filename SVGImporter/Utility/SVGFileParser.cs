@@ -10,22 +10,20 @@ namespace SVGImporter.Utility
     internal class SVGFileParser
     {
         private const string EXTENSION = ".svg";
-        private const string OPENING_TAG = "<";
-        private const string CLOSING_TAG = ">";
   
-        public static void ReadFile(string path, bool localPath = true)
+        public static Element? ReadSVGFile(string path, bool isLocalPath = true)
         {
-            if (path == null || !path.ToLower().EndsWith(EXTENSION)) return;
-            if(localPath) path = GetLocalPath(path);
+            if (path == null || !path.ToLower().EndsWith(EXTENSION)) return null;
+            if(isLocalPath) path = GetLocalPath(path);
             string svg = File.ReadAllText(path);
-            ReadSVG(svg, path);
+            return ReadSVG(svg);
         }
         public static string GetLocalPath(string path)
         {
             return System.IO.Path.Combine(Environment.CurrentDirectory, @path);
         }
 
-        public static void ReadSVG(string svgText, string path)
+        public static Element ReadSVG(string svgText)
         {
             svgText = svgText.Replace("\r\n", string.Empty);
 
@@ -38,8 +36,7 @@ namespace SVGImporter.Utility
             XElement root = doc.Root;
             XNamespace xNamespace = root.GetDefaultNamespace();
             Element svg = ParseDocumentRecusrively(root, xNamespace);
-            SaveFile(svg.ElementToSVGTag(), path);
-            //Console.WriteLine(svg.ElementToSVGTag());
+            return svg;
         }
 
         private static Element ParseDocumentRecusrively(XElement root, XNamespace xNamespace)
@@ -57,15 +54,26 @@ namespace SVGImporter.Utility
                 }
                 ((ParentElement)createdElement).SetChildren(elementsList);
             }
+            else if(root.FirstNode != null && Element.IsContainer(type))
+            {
+                string value = root.FirstNode.ToString();
+                ((ParentElement)createdElement).SetValue(value);
+            }
 
             return createdElement;
         }
 
-        public static void SaveFile(string generatedSVG, string path, bool localPath = true)
+        public static void SaveFile(string generatedSVG, string path, bool isLocalPath = true)
         {
             if (path == null || !path.ToLower().EndsWith(EXTENSION)) return;
-            if (localPath) path = GetLocalPath(path);
+            if (isLocalPath) path = GetLocalPath(path);
             File.WriteAllText(path.Insert(path.IndexOf(EXTENSION),"_NEW"), generatedSVG);            
+        }
+
+        public static void SaveSVG(Element svg, string path, bool isLocalPath = true)
+        {
+            if (svg == null) return;
+            SaveFile(svg.ElementToSVGTag(), path, isLocalPath);
         }
     }
 }
