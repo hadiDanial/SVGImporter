@@ -43,8 +43,6 @@ namespace SVGImporter.Elements.PathUtility
             if (!char.IsLetter(commandLetter)) throw new InvalidDataException($"Invalid data for path: {commandString}");
             if (char.IsUpper(commandLetter)) isAbsolute = true;
             commandLetter = char.ToUpper(commandLetter);
-            if (commandLetter.Equals(CLOSE_PATH))
-                return ClosePathCommand.INSTANCE;
             PathCommand command = null;
             string commandData = commandString.Substring(1);
             switch (commandLetter)
@@ -61,34 +59,42 @@ namespace SVGImporter.Elements.PathUtility
                     }
                 case HORIZONTAL:
                     {
+                        command = new SimpleMoveCommand(commandData, isAbsolute, SimpleMoveCommand.SimpleMoveType.Horizontal);
                         break;
                     }
                 case VERTICAL:
                     {
+                        command = new SimpleMoveCommand(commandData, isAbsolute, SimpleMoveCommand.SimpleMoveType.Vertical);
                         break;
                     }
-                case CLOSE_PATH:
+                    case CLOSE_PATH:
                     {
+                        command = new ClosePathCommand(commandData, isAbsolute);
                         break;
                     }
                 case CUBIC_CURVE:
                     {
+                        command = new CubicCurveCommand(commandData, isAbsolute);
                         break;
                     }
                 case CUBIC_CURVE_CONTINUE:
                     {
+                        command = new CubicCurveContinueCommand(commandData, isAbsolute);
                         break;
                     }
                 case QUADRATIC_CURVE:
                     {
+                        command = new QuadraticCurveCommand(commandData, isAbsolute);
                         break;
                     }
                 case QUADRATIC_CURVE_CONTINUE:
                     {
+                        command = new QuadraticCurveContinueCommand(commandData, isAbsolute);
                         break;
                     }
                 case ARC:
                     {
+                        command = new ArcCommand(commandData, isAbsolute);
                         break;
                     }
                 default:
