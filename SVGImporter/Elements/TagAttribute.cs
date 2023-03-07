@@ -58,9 +58,10 @@ namespace SVGImporter.Elements
             List<TagAttribute> attributes = new List<TagAttribute>();
             foreach (var xAttribute in xAttributes)
             {
+
                 TagAttribute attribute = new TagAttribute();
                 attribute.attributeValue = xAttribute.Value;
-                attribute.attributeName = xAttribute.Name.ToString();
+                attribute.attributeName = xAttribute.Name.LocalName;
                 attributes.Add(attribute);
             }
             return attributes;
