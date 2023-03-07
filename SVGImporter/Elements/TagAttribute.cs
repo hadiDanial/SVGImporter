@@ -42,11 +42,12 @@ namespace SVGImporter.Elements
             }
             return attributes;
         }
-        public static string AttributesToSVG(List<TagAttribute> attributes)
+        public static string AttributesToSVG(List<TagAttribute> attributes, List<string> attributesToIgnore)
         {
             StringBuilder stringBuilder = new StringBuilder();
             foreach (TagAttribute attribute in attributes)
             {
+                if (attributesToIgnore != null && attributesToIgnore.Contains(attribute.attributeName)) continue;
                 stringBuilder.Append(attribute);
                 stringBuilder.Append(' ');
             }

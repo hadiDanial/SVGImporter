@@ -7,9 +7,9 @@ namespace SVGImporter
     {
         static void Main(string[] args)
         {
-            Element element = SVGFileParser.ReadSVGFile("Resources/NewTux.svg");            
+            Element element = SVGFileParser.ReadSVGFile("Resources/test.svg");            
             Console.WriteLine(element.ToString());
-            SVGFileParser.SaveSVG(element, "Resources/NewTux.svg");
+            SVGFileParser.SaveSVG(element, "Resources/test.svg");
         }
     }
 }

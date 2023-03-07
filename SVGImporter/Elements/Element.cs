@@ -137,9 +137,9 @@ namespace SVGImporter.Elements
         /// Convert the attributes to SVG elements.
         /// </summary>
         /// <returns></returns>
-        protected string AttributesToSVG()
+        protected string AttributesToSVG(List<string> attributesToIgnore)
         {
-            return TagAttribute.AttributesToSVG(attributes);
+            return TagAttribute.AttributesToSVG(attributes, attributesToIgnore);
         }
 
         protected abstract TagType GetTagType();

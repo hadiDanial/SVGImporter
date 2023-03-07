@@ -13,8 +13,6 @@ namespace SVGImporter.Elements.Containers
         {
         }
 
-
-
         public new static string GetElementNameReadable()
         {
             return "Group";

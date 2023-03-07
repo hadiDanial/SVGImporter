@@ -42,8 +42,9 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
+            string[] attributesToIgnore = { "x", "y", "rx", "ry", "width", "height" };
             return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
-                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {TagAttribute.AttributesToSVG(attributes)}/>\n";
+                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
 

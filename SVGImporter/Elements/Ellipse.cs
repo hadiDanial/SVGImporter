@@ -36,7 +36,8 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG()}/>\n";
+            string[] attributesToIgnore = { "cx", "cy", "rx", "ry" };
+            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
         public override string ToString()

@@ -17,7 +17,7 @@ namespace SVGImporter.Elements.Containers
         }
         protected override string GetStartTag()
         {
-            return $"<{tagName} {AttributesToSVG()}>";
+            return $"<{tagName} {AttributesToSVG(null)}>";
         }
         protected override string GetEndTag()
         {

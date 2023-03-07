@@ -36,7 +36,7 @@ namespace SVGImporter.Elements.Containers
 
         protected virtual string GetStartTag()
         {
-            return $"<{GetElementName(GetTagType())} {AttributesToSVG()}>";
+            return $"<{GetElementName(GetTagType())} {AttributesToSVG(null)}>";
 
         }
 

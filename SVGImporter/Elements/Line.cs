@@ -34,7 +34,8 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(TagType.Line)} x1=\"{point1.x}\" y1=\"{point1.y}\" x2=\"{point2.x}\" y2=\"{point2.y}\" {AttributesToSVG()}/>\n";
+            string[] attributesToIgnore = { "x1", "y1", "x2", "y2" };
+            return $"<{GetElementName(TagType.Line)} x1=\"{point1.x}\" y1=\"{point1.y}\" x2=\"{point2.x}\" y2=\"{point2.y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }      
 
         public new static string GetElementNameReadable()

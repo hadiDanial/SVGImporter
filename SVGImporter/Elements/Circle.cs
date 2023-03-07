@@ -33,7 +33,8 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(TagType.Circle)} cx=\"{center.x}\" cy=\"{center.y}\" r=\"{radius}\" {AttributesToSVG()}/>\n";
+            string[] attributesToIgnore = { "cx", "cy", "r" };
+            return $"<{GetElementName(TagType.Circle)} cx=\"{center.x}\" cy=\"{center.y}\" r=\"{radius}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
         public override string ToString()

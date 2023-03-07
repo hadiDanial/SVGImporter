@@ -43,7 +43,8 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG()} />\n";
+            string[] attributesToIgnore = { "points" };
+            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG(new List<string>(attributesToIgnore))} />\n";
         }
 
         public new static string GetElementNameReadable()
