@@ -57,7 +57,13 @@ namespace SVGImporter.Elements
 
         public override string ElementToSVGTag()
         {
-            return $"<{GetElementName(GetTagType())} {TagAttribute.AttributesToSVG(attributes)}/>\n";
+            List<TagAttribute> list = new List<TagAttribute>(attributes);
+            for (int i = list.Count - 1; i >= 0 ; i--)
+            {
+                if (list[i].attributeName.Equals("d"))
+                    list.RemoveAt(i);
+            }
+            return $"<{GetElementName(GetTagType())} d=\"{GetData()}\" {TagAttribute.AttributesToSVG(list)}/>\n";
         }
 
         public new static string GetElementNameReadable()
