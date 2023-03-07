@@ -16,6 +16,9 @@ namespace SVGImporter.Elements.PathUtility
             value = values[0];
             this.movementType = movementType;
         }
+
+        public SimpleMoveCommand() { }
+
         public override string CommandToData()
         {
             if (MovementType == SimpleMoveType.Horizontal)

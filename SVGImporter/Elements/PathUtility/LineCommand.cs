@@ -13,6 +13,9 @@ namespace SVGImporter.Elements.PathUtility
                 throw new InvalidDataException($"Line command must have 2 values!");
             point = new Vector2(values[0], values[1]);
         }
+        
+        public LineCommand() { }
+
         public override string CommandToData()
         {
             return $"{GetCommandCharRelativeOrAbsolute(LINE)}{point.x},{point.y}";

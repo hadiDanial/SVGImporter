@@ -17,6 +17,8 @@ namespace SVGImporter.Elements.PathUtility
             controlPoint2 = new Vector2(values[0], values[1]);
             point2 = new Vector2(values[2], values[3]);
         }
+        
+        public CubicCurveContinueCommand() { }
 
         public override string CommandToData()
         {

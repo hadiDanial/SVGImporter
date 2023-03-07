@@ -15,6 +15,8 @@ namespace SVGImporter.Elements.PathUtility
             point2 = new Vector2(values[0], values[1]);
         }
 
+        public QuadraticCurveContinueCommand() { }
+
         public override string CommandToData()
         {
             return $"{GetCommandCharRelativeOrAbsolute(QUADRATIC_CURVE_CONTINUE)}{point2.x},{point2.y}";

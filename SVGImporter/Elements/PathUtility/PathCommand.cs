@@ -34,6 +34,9 @@ namespace SVGImporter.Elements.PathUtility
             this.data = data;
             values = GetDataValues(data);
         }
+        
+        public PathCommand() { }
+
         protected char GetCommandCharRelativeOrAbsolute(char ch)
         {
             if (isAbsolute) return char.ToUpper(ch);

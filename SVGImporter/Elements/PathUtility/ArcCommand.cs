@@ -28,6 +28,9 @@ namespace SVGImporter.Elements.PathUtility
             sweep = sweepInt == 1;
             endPoint = new Vector2(values[5], values[6]);
         }
+
+        public ArcCommand() { }
+        
         public override string CommandToData()
         {
             int arcInt = arc ? 1 : 0, sweepInt = sweep ? 1 : 0;
