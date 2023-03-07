@@ -14,7 +14,7 @@ namespace SVGImporter.Elements
         private List<PathCommand> pathCommands;
         private string pathData = string.Empty;
         private bool isClosedPath;
-        private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([ |,|\\-])*(\\d+\\.\\d+|\\d+))*|z)";
+        private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([\n|\t|\r| |,|\\-])*(\\d+\\.\\d+|\\d+))*|z)";
 
         public bool IsClosedPath { get => isClosedPath; set => isClosedPath = value; }
 
@@ -40,10 +40,7 @@ namespace SVGImporter.Elements
             {
                 PathCommand command = PathCommand.CreateCommand(match.Value);
                 if (command == null) continue; // TODO: Remove, this is only here because nothing is implemented yet
-                if (command.Equals(ClosePathCommand.INSTANCE))
-                    IsClosedPath = true;
-                else
-                    pathCommands.Add(command);
+                pathCommands.Add(command);
             }
         }
 
