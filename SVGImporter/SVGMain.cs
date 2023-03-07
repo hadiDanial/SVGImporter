@@ -1,9 +1,5 @@
-﻿using SVGImporter.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SVGImporter.Elements;
+using SVGImporter.Utility;
 
 namespace SVGImporter
 {
@@ -11,7 +7,11 @@ namespace SVGImporter
     {
         static void Main(string[] args)
         {
-            SVGFileParser.ReadFile("Resources/test.svg");
+            Element element = SVGFileParser.ReadSVGFile("Resources/test.svg");
+            Console.WriteLine(element.ElementToSVGTag());
+            Console.WriteLine("\n\n\n");
+            Console.WriteLine(element.ToString());
+            SVGFileParser.SaveSVG(element, "Resources/test.svg");
         }
     }
 }
