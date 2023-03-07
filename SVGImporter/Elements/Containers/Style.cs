@@ -8,7 +8,7 @@ namespace SVGImporter.Elements.Containers
 {
     public class Style : ParentElement
     {
-        public Style(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
+        public Style(List<TagAttribute> attributes) : base(attributes)
         {
         }
         public static new Style GetElement(string tagText)
@@ -17,7 +17,7 @@ namespace SVGImporter.Elements.Containers
             string content, value;
             GetContentAndAttributes(tagText, GetElementName(TagType.Style), TagType.G, out attributes, out content, out value);
 
-            Style style = new Style(tagText, attributes);
+            Style style = new Style(attributes);
             style.children = Element.GetElements(content);
             style.value = value;
             Console.WriteLine("Content:\n" + content);

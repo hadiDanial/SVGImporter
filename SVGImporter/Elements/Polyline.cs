@@ -7,9 +7,13 @@ namespace SVGImporter.Elements
     {
         protected List<Vector2> points;
         protected const string PATTERN = "([0-9]+)(\\.?)([0-9]*),([0-9]+)(\\.?)([0-9]*)";
-        protected Polyline(string tagText, List<TagAttribute> attributes, List<Vector2> points) : base(tagText, attributes)
+        protected Polyline(List<TagAttribute> attributes, List<Vector2> points) : base(attributes)
         {
             this.points = points;
+        }
+
+        public Polyline(List<TagAttribute> attributes) : base(attributes)
+        {
         }
 
         public override string ElementToSVGTag()
@@ -44,7 +48,7 @@ namespace SVGImporter.Elements
                 Vector2 point = new Vector2(x, y);
                 pointsList.Add(point);
             }
-            Polyline line = new Polyline(tagText, attributes, pointsList);
+            Polyline line = new Polyline(attributes, pointsList);
             return line;
         }
 

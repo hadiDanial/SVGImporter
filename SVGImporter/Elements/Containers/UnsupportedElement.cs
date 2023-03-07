@@ -9,7 +9,7 @@ namespace SVGImporter.Elements.Containers
 {
     internal class UnsupportedElement : Group
     {
-        protected UnsupportedElement(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
+        internal UnsupportedElement(List<TagAttribute> attributes) : base(attributes)
         {
         }
 
@@ -18,7 +18,7 @@ namespace SVGImporter.Elements.Containers
             List<TagAttribute> attributes;
             string content, value;
             GetContentAndAttributes(tagText, GetElementName(TagType.Unknown), TagType.Unknown, out attributes, out content, out value);
-            UnsupportedElement svg = new UnsupportedElement(tagText, attributes);
+            UnsupportedElement svg = new UnsupportedElement(attributes);
             svg.children = Element.GetElements(content);
             Console.WriteLine("Content:\n" + content);
             return svg;

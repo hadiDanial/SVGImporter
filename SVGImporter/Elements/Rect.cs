@@ -8,13 +8,16 @@ namespace SVGImporter.Elements
         private Vector2 size;
         private Vector2 cornerRadius;
 
-        protected Rect(string tagText, List<TagAttribute> attributes, Vector2 position, Vector2 size, Vector2 cornerRadius) : base(tagText, attributes)
+        protected Rect(List<TagAttribute> attributes, Vector2 position, Vector2 size, Vector2 cornerRadius) : base(attributes)
         {
             this.position = position;
             this.size = size;
             this.cornerRadius = cornerRadius;
         }
 
+        public Rect(List<TagAttribute> attributes) : base(attributes)
+        {
+        }
 
         public override string ElementToSVGTag()
         {
@@ -57,7 +60,7 @@ namespace SVGImporter.Elements
             Vector2 size = new Vector2(width, height);
             Vector2 radius = new Vector2(rx, ry);
 
-            Rect rect = new Rect(tagText, attributes, position, size, radius);
+            Rect rect = new Rect(attributes, position, size, radius);
             return rect;
         }
 

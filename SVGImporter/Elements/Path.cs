@@ -9,7 +9,7 @@ namespace SVGImporter.Elements
 {
     internal class Path : Element
     {
-        protected Path(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
+        internal Path(List<TagAttribute> attributes) : base(attributes)
         {
         }
 
@@ -20,7 +20,7 @@ namespace SVGImporter.Elements
 
         public static new Path GetElement(string tagText)
         {
-            return new Path(tagText, new List<TagAttribute>());
+            return new Path(new List<TagAttribute>());
             //throw new NotImplementedException();
         }
 

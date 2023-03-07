@@ -8,10 +8,14 @@ namespace SVGImporter.Elements
         private Vector2 center;
         private float radius;
 
-        protected Circle(string tagText, Vector2 center, float radius, List<TagAttribute> attributes) : base(tagText, attributes)
+        protected Circle(Vector2 center, float radius, List<TagAttribute> attributes) : base(attributes)
         {
             this.center = center;
             this.radius = radius;
+        }
+
+        public Circle(List<TagAttribute> attributes) : base(attributes)
+        {
         }
 
         public override string ElementToSVGTag()
@@ -45,7 +49,7 @@ namespace SVGImporter.Elements
             }
             Vector2 center = new Vector2(x, y);
 
-            Circle circle = new Circle(tagText, center, r, attributes);
+            Circle circle = new Circle(center, r, attributes);
             return circle;
         }
 

@@ -9,7 +9,7 @@ namespace SVGImporter.Elements.Containers
         protected string value;
         public List<Element> Children => children;
 
-        protected ParentElement(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
+        protected ParentElement(List<TagAttribute> attributes) : base(attributes)
         {
             children = new List<Element>();
             value = string.Empty;

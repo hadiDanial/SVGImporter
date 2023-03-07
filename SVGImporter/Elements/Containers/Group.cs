@@ -9,7 +9,7 @@ namespace SVGImporter.Elements.Containers
 {
     internal class Group : ParentElement
     {
-        protected Group(string tagText, List<TagAttribute> attributes) : base(tagText, attributes)
+        internal Group(List<TagAttribute> attributes) : base(attributes)
         {
         }
 
@@ -19,7 +19,7 @@ namespace SVGImporter.Elements.Containers
             string content, value;
             GetContentAndAttributes(tagText, GetElementName(TagType.G), TagType.G, out attributes, out content, out value, true);
 
-            Group group = new Group(tagText, attributes);
+            Group group = new Group(attributes);
             group.children = Element.GetElements(content);
             group.value = value;
             Console.WriteLine("Content:\n" + content);

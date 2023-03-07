@@ -9,19 +9,17 @@ namespace SVGImporter.Elements
         protected List<TagAttribute> attributes;
         protected Style style;
         protected string elementNameReadable, elementName, elementId;
-        protected string tagText;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
         protected const string OPENING_TAG = "<";
         protected const string CLOSING_TAG = ">";
         protected const string SINGLE_TAG_PATTERN = "<\\w+( ([^<])*?)+? *?(\\/|\\\\)>";
         protected const string GROUP_TAG_PATTERN = "<(\\w+)( (\\r| |\\t|\\n|.)*?)+>((\\r| |\\t|\\n|.)*?)<(\\\\|\\/)\\1+>";
-        protected Element(string tagText, List<TagAttribute> attributes)
+        protected Element(List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
             elementName = GetElementName(GetTagType());
             elementId = GetCustomName(attributes);
             this.attributes = attributes;
-            this.tagText = tagText;
         }
 
         private string GetCustomName(List<TagAttribute> attributes)
@@ -36,6 +34,36 @@ namespace SVGImporter.Elements
         }
 
 
+        internal static Element CreateElement(TagType type, string tagText, List<TagAttribute> attributes)
+        {
+            switch (type)
+            {
+                case TagType.Circle:
+                    return new Circle(attributes);
+                case TagType.Ellipse:
+                    return new Ellipse(attributes);
+                case TagType.G:
+                    return new Containers.Group(attributes);
+                case TagType.Line:
+                    return new Line(attributes);
+                case TagType.Path:
+                    return new Path(attributes);
+                case TagType.Polygon:
+                    return new Polygon(attributes);
+                case TagType.Polyline:
+                    return new Polyline(attributes);
+                case TagType.Rect:
+                    return new Rect(attributes);
+                case TagType.SVG:
+                    return new SVG(attributes);
+                case TagType.Style:
+                    return new Style(attributes);
+                case TagType.Unknown:
+                default:
+                    return new UnsupportedElement(attributes);
+
+            }
+        }
         private static Element CreateElementByType(TagType type, string tagText)
         {
             switch (type)
@@ -245,5 +273,6 @@ namespace SVGImporter.Elements
         }
 
         protected abstract TagType GetTagType();
+
     }
 }

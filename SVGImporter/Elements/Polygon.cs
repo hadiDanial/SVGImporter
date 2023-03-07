@@ -5,10 +5,14 @@ namespace SVGImporter.Elements
 {
     internal class Polygon : Polyline
     {
-        protected Polygon(string tagText, List<TagAttribute> attributes, List<Vector2> points) : base(tagText, attributes, points)
+        protected Polygon(List<TagAttribute> attributes, List<Vector2> points) : base(attributes, points)
         {
             if (points.Count < 3)
                 throw new ArgumentException("Polygon must have at least three points");
+        }
+
+        public Polygon(List<TagAttribute> attributes) : base(attributes)
+        {
         }
 
         public static new Polygon GetElement(string tagText)

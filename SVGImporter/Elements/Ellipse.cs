@@ -7,10 +7,13 @@ namespace SVGImporter.Elements
         private Vector2 center;
         private Vector2 radius;
 
-        protected Ellipse(string tagText, Vector2 center, Vector2 radius, List<TagAttribute> attributes) : base(tagText, attributes)
-        {
+        protected Ellipse(Vector2 center, Vector2 radius, List<TagAttribute> attributes) : base(attributes)        {
             this.center = center;
             this.radius = radius;
+        }
+
+        public Ellipse(List<TagAttribute> attributes) : base(attributes)
+        {
         }
 
         public override string ElementToSVGTag()
@@ -51,7 +54,7 @@ namespace SVGImporter.Elements
             Vector2 center = new Vector2(x, y);
             Vector2 radius = new Vector2(rx, ry);
 
-            Ellipse ellipse = new Ellipse(tagText, center, radius, attributes);
+            Ellipse ellipse = new Ellipse(center, radius, attributes);
             return ellipse;
         }
 

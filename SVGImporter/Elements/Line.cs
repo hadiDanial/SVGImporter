@@ -7,10 +7,14 @@ namespace SVGImporter.Elements
     {
         private Vector2 point1, point2;
 
-        protected Line(string tagText, Vector2 point1, Vector2 point2, List<TagAttribute> attributes) : base(tagText, attributes)
+        protected Line(Vector2 point1, Vector2 point2, List<TagAttribute> attributes) : base(attributes)
         {
             this.point1 = point1;
             this.point2 = point2;
+        }
+
+        public Line(List<TagAttribute> attributes) : base(attributes)
+        {
         }
 
         public override string ElementToSVGTag()
@@ -37,7 +41,7 @@ namespace SVGImporter.Elements
             Vector2 p1 = new Vector2(x1, y1);
             Vector2 p2 = new Vector2(x2, y2);
 
-            Line line = new Line(tagText, p1, p2, attributes);
+            Line line = new Line(p1, p2, attributes);
             return line;
         }
 
