@@ -6,5 +6,9 @@
         {
         }
 
+        public override string CommandToData()
+        {
+            return CLOSE_PATH.ToString();
+        }
     }
 }

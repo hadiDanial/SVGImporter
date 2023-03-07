@@ -1,4 +1,5 @@
 ﻿using SVGImporter.Utility;
+using System.Drawing;
 
 namespace SVGImporter.Elements.PathUtility
 {
@@ -16,6 +17,11 @@ namespace SVGImporter.Elements.PathUtility
                 throw new InvalidDataException($"Quadric curve command must have 4 values!");
             controlPoint = new Vector2(values[0], values[1]);
             point2 = new Vector2(values[2], values[3]);
+        }
+
+        public override string CommandToData()
+        {
+            return $"{GetCommandCharRelativeOrAbsolute(QUADRATIC_CURVE)}{controlPoint.x},{controlPoint.y} {point2.x},{point2.y}";
         }
     }
 }

@@ -14,5 +14,10 @@ namespace SVGImporter.Elements.PathUtility
                 throw new InvalidDataException($"Quadric curve continue command must have 2 values!");
             point2 = new Vector2(values[0], values[1]);
         }
+
+        public override string CommandToData()
+        {
+            return $"{GetCommandCharRelativeOrAbsolute(QUADRATIC_CURVE_CONTINUE)}{point2.x},{point2.y}";
+        }
     }
 }

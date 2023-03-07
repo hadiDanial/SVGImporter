@@ -5,5 +5,10 @@
         public ArcCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
         }
+
+        public override string CommandToData()
+        {
+            return "ARC";
+        }
     }
 }

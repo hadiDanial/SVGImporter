@@ -20,5 +20,10 @@ namespace SVGImporter.Elements.PathUtility
             controlPoint2 = new Vector2(values[2], values[3]);
             point2 = new Vector2(values[4], values[5]);
         }
+
+        public override string CommandToData()
+        {
+            return $"{GetCommandCharRelativeOrAbsolute(CUBIC_CURVE)}{controlPoint1.x},{controlPoint1.y} {controlPoint2.x},{controlPoint2.y} {point2.x},{point2.y}";
+        }
     }
 }

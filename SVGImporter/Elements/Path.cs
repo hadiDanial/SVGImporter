@@ -39,9 +39,20 @@ namespace SVGImporter.Elements
             foreach (Match match in matches)
             {
                 PathCommand command = PathCommand.CreateCommand(match.Value);
-                if (command == null) continue; // TODO: Remove, this is only here because nothing is implemented yet
                 pathCommands.Add(command);
             }
+        }
+
+        public string GetData()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (PathCommand command in pathCommands)
+            {
+                stringBuilder.Append(command.CommandToData());
+                stringBuilder.Append(' ');
+            }
+
+            return stringBuilder.ToString();
         }
 
         public override string ElementToSVGTag()
@@ -56,7 +67,7 @@ namespace SVGImporter.Elements
 
         public override string ToString()
         {
-            return "Path-NotImplemented";
+            return "Path: " + GetData();
         }
 
         protected override TagType GetTagType()

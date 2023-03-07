@@ -17,16 +17,16 @@ namespace SVGImporter.Elements.PathUtility
 
         public bool IsAbsolute { get => isAbsolute; set => isAbsolute = value; }
 
-        private const char MOVE = 'M';
-        private const char LINE = 'L';
-        private const char HORIZONTAL = 'H';
-        private const char VERTICAL = 'V';
-        private const char CLOSE_PATH = 'Z';
-        private const char CUBIC_CURVE = 'C';
-        private const char CUBIC_CURVE_CONTINUE = 'S';
-        private const char QUADRATIC_CURVE = 'Q';
-        private const char QUADRATIC_CURVE_CONTINUE = 'T';
-        private const char ARC = 'A';
+        protected const char MOVE = 'M';
+        protected const char LINE = 'L';
+        protected const char HORIZONTAL = 'H';
+        protected const char VERTICAL = 'V';
+        protected const char CLOSE_PATH = 'Z';
+        protected const char CUBIC_CURVE = 'C';
+        protected const char CUBIC_CURVE_CONTINUE = 'S';
+        protected const char QUADRATIC_CURVE = 'Q';
+        protected const char QUADRATIC_CURVE_CONTINUE = 'T';
+        protected const char ARC = 'A';
 
         protected PathCommand(string data, bool isAbsolute)
         {
@@ -34,7 +34,12 @@ namespace SVGImporter.Elements.PathUtility
             this.data = data;
             values = GetDataValues(data);
         }
-
+        protected char GetCommandCharRelativeOrAbsolute(char ch)
+        {
+            if (isAbsolute) return char.ToUpper(ch);
+            return char.ToLower(ch);
+        }
+        public abstract string CommandToData();
         public static PathCommand CreateCommand(string commandString)
         {
             if (string.IsNullOrEmpty(commandString)) throw new InvalidDataException($"Invalid data for path: {commandString}");

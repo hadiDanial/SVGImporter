@@ -12,11 +12,17 @@ namespace SVGImporter.Elements.PathUtility
         public SimpleMoveCommand(string data, bool isAbsolute, SimpleMoveType movementType) : base(data, isAbsolute)
         {
             if (values == null || values.Count != 1)
-                throw new InvalidDataException($"Line command must have 2 values!");
+                throw new InvalidDataException($"{movementType} command must have one value!");
             value = values[0];
             this.movementType = movementType;
         }
-
+        public override string CommandToData()
+        {
+            if (MovementType == SimpleMoveType.Horizontal)
+                return $"{GetCommandCharRelativeOrAbsolute(HORIZONTAL)}{value}";
+            else
+                return $"{GetCommandCharRelativeOrAbsolute(VERTICAL)}{value}";
+        }
         internal enum SimpleMoveType
         {
             Horizontal, Vertical

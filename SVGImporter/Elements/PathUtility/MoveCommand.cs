@@ -13,6 +13,9 @@ namespace SVGImporter.Elements.PathUtility
                 throw new InvalidDataException($"Move command must have 2 values!");
             point = new Vector2(values[0], values[1]);
         }
-
+        public override string CommandToData()
+        {
+            return $"{GetCommandCharRelativeOrAbsolute(MOVE)}{point.x},{point.y}";
+        }
     }
 }
