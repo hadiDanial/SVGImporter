@@ -52,5 +52,18 @@ namespace SVGImporter.Elements
             }
             return stringBuilder.ToString();
         }
+
+        internal static List<TagAttribute> FromXElementAttributes(IEnumerable<XAttribute> xAttributes)
+        {
+            List<TagAttribute> attributes = new List<TagAttribute>();
+            foreach (var xAttribute in xAttributes)
+            {
+                TagAttribute attribute = new TagAttribute();
+                attribute.attributeValue = xAttribute.Value;
+                attribute.attributeName = xAttribute.Name.ToString();
+                attributes.Add(attribute);
+            }
+            return attributes;
+        }
     }
 }
