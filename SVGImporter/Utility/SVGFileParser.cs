@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace SVGImporter.Utility
 {
-    internal class SVGFileParser
+    public class SVGFileParser
     {
         private const string EXTENSION = ".svg";
   
@@ -30,7 +30,7 @@ namespace SVGImporter.Utility
             int start = svgText.IndexOf("<svg");
             if (start == -1)
             {
-                throw new InvalidDataException("No <svg> tag found!");
+                throw new Exception("No <svg> tag found!");
             }
             var doc = XDocument.Parse(svgText);
             XElement root = doc.Root;
