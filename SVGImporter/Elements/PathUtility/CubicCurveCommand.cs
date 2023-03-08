@@ -15,7 +15,7 @@ namespace SVGImporter.Elements.PathUtility
         public CubicCurveCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
             if (values == null || values.Count != 6)
-                throw new InvalidDataException($"Cubic curve command must have 6 values!");
+                throw new SVGException($"Cubic curve command must have 6 values!");
             controlPoint1 = new Vector2(values[0], values[1]);
             controlPoint2 = new Vector2(values[2], values[3]);
             point2 = new Vector2(values[4], values[5]);

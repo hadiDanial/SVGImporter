@@ -11,7 +11,7 @@ namespace SVGImporter.Elements.PathUtility
         public QuadraticCurveContinueCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
             if (values == null || values.Count != 4)
-                throw new InvalidDataException($"Quadric curve continue command must have 2 values!");
+                throw new SVGException($"Quadric curve continue command must have 2 values!");
             point2 = new Vector2(values[0], values[1]);
         }
 

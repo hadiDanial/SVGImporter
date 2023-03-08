@@ -45,10 +45,10 @@ namespace SVGImporter.Elements.PathUtility
         public abstract string CommandToData();
         public static PathCommand CreateCommand(string commandString)
         {
-            if (string.IsNullOrEmpty(commandString)) throw new InvalidDataException($"Invalid data for path: {commandString}");
+            if (string.IsNullOrEmpty(commandString)) throw new SVGException($"Invalid data for path: {commandString}");
             char commandLetter = commandString[0];
             bool isAbsolute = false;
-            if (!char.IsLetter(commandLetter)) throw new InvalidDataException($"Invalid data for path: {commandString}");
+            if (!char.IsLetter(commandLetter)) throw new SVGException($"Invalid data for path: {commandString}");
             if (char.IsUpper(commandLetter)) isAbsolute = true;
             commandLetter = char.ToUpper(commandLetter);
             PathCommand command = null;
@@ -106,7 +106,7 @@ namespace SVGImporter.Elements.PathUtility
                         break;
                     }
                 default:
-                    throw new InvalidDataException($"Invalid command for path: {commandString}");
+                    throw new SVGException($"Invalid command for path: {commandString}");
             }
             return command;
         }

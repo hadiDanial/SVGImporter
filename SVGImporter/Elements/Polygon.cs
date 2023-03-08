@@ -8,7 +8,7 @@ namespace SVGImporter.Elements
         protected Polygon(List<TagAttribute> attributes, List<Vector2> points) : base(attributes, points)
         {
             if (points.Count < 3)
-                throw new ArgumentException("Polygon must have at least three points");
+                throw new SVGException("Polygon must have at least three points");
         }
 
         public Polygon(List<TagAttribute> attributes) : base(attributes)

@@ -10,7 +10,7 @@ namespace SVGImporter.Elements.PathUtility
         public LineCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
             if (values == null || values.Count != 2)
-                throw new InvalidDataException($"Line command must have 2 values!");
+                throw new SVGException($"Line command must have 2 values!");
             point = new Vector2(values[0], values[1]);
         }
         

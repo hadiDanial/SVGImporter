@@ -10,7 +10,7 @@ namespace SVGImporter.Elements.PathUtility
         public MoveCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
             if (values == null || values.Count != 2)
-                throw new InvalidDataException($"Move command must have 2 values!");
+                throw new SVGException($"Move command must have 2 values!");
             point = new Vector2(values[0], values[1]);
         }
         

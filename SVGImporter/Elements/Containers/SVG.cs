@@ -23,7 +23,7 @@ namespace SVGImporter.Elements.Containers
                 {
                     string[] values = attribute.attributeValue.Split(' ');
                     if (values == null || values.Length != 4)
-                        throw new InvalidDataException($"Invalid ViewBox values for {GetElementName(TagType.SVG)}");
+                        throw new SVGException($"Invalid ViewBox values for {GetElementName(TagType.SVG)}");
                     if (float.TryParse(attribute.attributeValue, out val))
                         minX = val;
                     if (float.TryParse(attribute.attributeValue, out val))

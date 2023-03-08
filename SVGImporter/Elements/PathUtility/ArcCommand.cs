@@ -17,13 +17,13 @@ namespace SVGImporter.Elements.PathUtility
         public ArcCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {
             if(values == null || values.Count != 7)
-                throw new InvalidDataException($"Arc command must have 7 values!");
+                throw new SVGException($"Arc command must have 7 values!");
             radius = new Vector2(values[0], values[1]);
             rotation = values[2];
             int arcInt = (int)values[3];
             int sweepInt = (int)values[4];
             if(arcInt < 0 || arcInt > 1 || sweepInt < 0 || sweepInt > 1)
-                throw new InvalidDataException($"Arc and sweep values in Arc path command must be either 0 or 1!");
+                throw new SVGException($"Arc and sweep values in Arc path command must be either 0 or 1!");
             arc = arcInt == 1;
             sweep = sweepInt == 1;
             endPoint = new Vector2(values[5], values[6]);

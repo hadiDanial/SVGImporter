@@ -30,7 +30,7 @@ namespace SVGImporter.Utility
             int start = svgText.IndexOf("<svg");
             if (start == -1)
             {
-                throw new Exception("No <svg> tag found!");
+                throw new SVGException("No <svg> tag found!");
             }
             var doc = XDocument.Parse(svgText);
             XElement root = doc.Root;
