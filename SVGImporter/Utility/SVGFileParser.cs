@@ -1,6 +1,7 @@
 ﻿using SVGImporter.Elements;
 using SVGImporter.Elements.Containers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Xml.Linq;

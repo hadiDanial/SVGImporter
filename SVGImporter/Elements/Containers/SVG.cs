@@ -1,6 +1,7 @@
 ﻿using SVGImporter.Elements;
 using SVGImporter.Utility;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace SVGImporter.Elements.Containers
 {

@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
+using System.Collections.Generic;
+
 namespace SVGImporter.Elements.Containers
 {
     public abstract class ParentElement : Element

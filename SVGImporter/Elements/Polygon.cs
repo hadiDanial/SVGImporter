@@ -1,5 +1,6 @@
 ﻿using SVGImporter.Elements;
 using SVGImporter.Utility;
+using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {

@@ -8,7 +8,7 @@ namespace SVGImporter
         static void Main(string[] args)
         {
             Element element = SVGFileParser.ReadSVGFile("Resources/test.svg");            
-            Console.WriteLine(element.ToString());
+            //Console.WriteLine(element.ToString());
             SVGFileParser.SaveSVG(element, "Resources/test.svg");
         }
     }
