@@ -1,5 +1,4 @@
 ﻿using SVGImporter.Utility;
-using System.Numerics;
 
 namespace SVGImporter.Elements.PathUtility
 {
@@ -19,7 +18,7 @@ namespace SVGImporter.Elements.PathUtility
 
         public override string CommandToData()
         {
-            return $"{GetCommandCharRelativeOrAbsolute(LINE)}{point.X},{point.Y}";
+            return $"{GetCommandCharRelativeOrAbsolute(LINE)}{point.x},{point.y}";
         }
     }
 }

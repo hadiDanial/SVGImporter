@@ -1,4 +1,6 @@
 ﻿using SVGImporter.Elements.Containers;
+using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace SVGImporter.Elements
@@ -6,6 +8,7 @@ namespace SVGImporter.Elements
     public abstract class Element
     {
         protected List<TagAttribute> attributes;
+        protected Style style;
         protected string elementNameReadable, elementName, elementId;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
         protected const string OPENING_TAG = "<";
