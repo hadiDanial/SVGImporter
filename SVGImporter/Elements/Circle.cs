@@ -9,6 +9,9 @@ namespace SVGImporter.Elements
         private Vector2 center;
         private float radius;
 
+        public Vector2 Center { get => center; set => center = value; }
+        public float Radius { get => radius; set => radius = value; }
+
         protected Circle(Vector2 center, float radius, List<TagAttribute> attributes) : base(attributes)
         {
             this.center = center;

@@ -18,24 +18,38 @@ namespace SVGImporter.Elements
         public static SVG CreatePathFromPoints(List<Vector2> points, Vector2 origin, bool useAbsolutePosition, bool isClosed)
         {
             List<PathCommand> commands = new List<PathCommand>();
+            List<Element> elements = new List<Element>();
             MoveCommand moveCommand = new MoveCommand();
+            Vector2 prevPoint = points[0];
             moveCommand.Point = points[0];
             moveCommand.IsAbsolute = useAbsolutePosition;
             commands.Add(moveCommand);
-            for (int i = 1; i < points.Count; i += 4)
+            for (int i = 1; i < points.Count; i += 3)
             {
                 CubicCurveCommand cubicCurveCommand = new CubicCurveCommand();
-                cubicCurveCommand.ControlPoint1 = points[i];
-                cubicCurveCommand.ControlPoint2 = points[i + 1];
+                cubicCurveCommand.ControlPoint1 = points[i]+ prevPoint;
+                cubicCurveCommand.ControlPoint2 = points[i + 2] - points[i + 1] ;
+                // Control point locations:
+                // Circle circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
+                // circle.Center = points[i];
+                // circle.Radius = 10;
+                // elements.Add(circle);
+                // circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
+                // circle.Center = points[i+1];
+                // circle.Radius = 10;
+                // elements.Add(circle); 
                 cubicCurveCommand.Point2 = points[i + 2];
+                cubicCurveCommand.IsAbsolute = true;
                 commands.Add(cubicCurveCommand);
             }
             if (isClosed)
                 commands.Add(new ClosePathCommand());
             Path path = new Path(commands);
-            SVG svg = new SVG(new Vector2(100, 100), new ViewBox(new Vector2(100, 100), origin));
+            SVG svg = new SVG(new Vector2(500, 500), new ViewBox(new Vector2(500, 500), new Vector2(-250, -250)));
             Style style = new Style(new List<TagAttribute>());
-            svg.SetChildren(new List<Element> { path, style });
+            elements.Add(path);
+            elements.Add(style);
+            svg.SetChildren(elements);
             return svg;
         }
         internal Path(List<PathCommand> pathCommands) : base(new List<TagAttribute>())
