@@ -1,5 +1,6 @@
 ﻿using SVGImporter.Utility;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Numerics;
 
 namespace SVGImporter.Elements
 {
@@ -44,14 +45,14 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {
             string[] attributesToIgnore = { "x", "y", "rx", "ry", "width", "height" };
-            return $"<{GetElementName(TagType.Rect)} x=\"{position.x}\" y=\"{position.y}\" " +
-                $"width=\"{size.x}\" height=\"{size.y}\" rx=\"{cornerRadius.x}\" ry=\"{cornerRadius.y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
+            return $"<{GetElementName(TagType.Rect)} x=\"{position.X}\" y=\"{position.Y}\" " +
+                $"width=\"{size.X}\" height=\"{size.Y}\" rx=\"{cornerRadius.X}\" ry=\"{cornerRadius.Y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
 
         public override string ToString()
         {
-            return $"Rect: {position}, size = {size}, corners = {cornerRadius}";
+            return $"Rect: {Vector2Utility.ToString(position)}, size = {Vector2Utility.ToString(size)}, corners = {Vector2Utility.ToString(cornerRadius)}";
         }
 
         public new static string GetElementNameReadable()

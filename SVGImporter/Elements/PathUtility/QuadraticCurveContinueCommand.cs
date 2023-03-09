@@ -1,4 +1,5 @@
 ﻿using SVGImporter.Utility;
+using System.Numerics;
 
 namespace SVGImporter.Elements.PathUtility
 {
@@ -19,7 +20,7 @@ namespace SVGImporter.Elements.PathUtility
 
         public override string CommandToData()
         {
-            return $"{GetCommandCharRelativeOrAbsolute(QUADRATIC_CURVE_CONTINUE)}{point2.x},{point2.y}";
+            return $"{GetCommandCharRelativeOrAbsolute(QUADRATIC_CURVE_CONTINUE)}{point2.X},{point2.Y}";
         }
     }
 }

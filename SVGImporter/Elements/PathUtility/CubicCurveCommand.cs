@@ -1,5 +1,6 @@
 ﻿using SVGImporter.Utility;
 using System.Drawing;
+using System.Numerics;
 
 namespace SVGImporter.Elements.PathUtility
 {
@@ -25,7 +26,7 @@ namespace SVGImporter.Elements.PathUtility
 
         public override string CommandToData()
         {
-            return $"{GetCommandCharRelativeOrAbsolute(CUBIC_CURVE)}{controlPoint1.x},{controlPoint1.y} {controlPoint2.x},{controlPoint2.y} {point2.x},{point2.y}";
+            return $"{GetCommandCharRelativeOrAbsolute(CUBIC_CURVE)}{controlPoint1.X},{controlPoint1.Y} {controlPoint2.X},{controlPoint2.Y} {point2.X},{point2.Y}";
         }
     }
 }

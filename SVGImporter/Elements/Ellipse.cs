@@ -1,5 +1,6 @@
 ﻿using SVGImporter.Utility;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SVGImporter.Elements
 {
@@ -38,12 +39,12 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {
             string[] attributesToIgnore = { "cx", "cy", "rx", "ry" };
-            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.x}\" cy=\"{center.y}\" rx=\"{radius.x}\" ry=\"{radius.y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
+            return $"<{GetElementName(TagType.Ellipse)} cx=\"{center.X}\" cy=\"{center.Y}\" rx=\"{radius.X}\" ry=\"{radius.Y}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
         public override string ToString()
         {
-            return $"{GetElementNameReadable()}: {center}, R = {radius}";
+            return $"{GetElementNameReadable()}: {Vector2Utility.ToString(center)}, R = {radius}";
         }
 
 

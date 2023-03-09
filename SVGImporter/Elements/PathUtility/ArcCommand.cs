@@ -1,4 +1,5 @@
 ﻿using SVGImporter.Utility;
+using System.Numerics;
 
 namespace SVGImporter.Elements.PathUtility
 {
@@ -34,7 +35,7 @@ namespace SVGImporter.Elements.PathUtility
         public override string CommandToData()
         {
             int arcInt = arc ? 1 : 0, sweepInt = sweep ? 1 : 0;
-            return $"{GetCommandCharRelativeOrAbsolute(ARC)}{radius.x},{radius.y} , {rotation}, {arcInt},{sweepInt} , {endPoint.x},{endPoint.y}";
+            return $"{GetCommandCharRelativeOrAbsolute(ARC)}{radius.X},{radius.Y} , {rotation}, {arcInt},{sweepInt} , {endPoint.X},{endPoint.Y}";
         }
     }
 }

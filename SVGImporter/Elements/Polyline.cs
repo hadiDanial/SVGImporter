@@ -1,6 +1,7 @@
 ﻿using SVGImporter.Utility;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SVGImporter.Elements
 {
@@ -45,7 +46,7 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {
             string[] attributesToIgnore = { "points" };
-            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG(new List<string>(attributesToIgnore))} />\n";
+            return $"<{GetElementName(TagType.Polyline)} points=\"{Vector2Utility.ToSVG(points)}\" {AttributesToSVG(new List<string>(attributesToIgnore))} />\n";
         }
 
         public new static string GetElementNameReadable()
