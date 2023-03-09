@@ -18,6 +18,11 @@ namespace SVGImporter.Elements.Containers
             return "Group";
         }
 
+        protected override string GetCustomData()
+        {
+            return String.Empty;
+        }
+
         protected override TagType GetTagType()
         {
             return TagType.G;

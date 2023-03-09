@@ -1,27 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using SVGImporter.Elements;
+using SVGImporter.Elements.Containers;
 using SVGImporter.Elements.PathUtility;
+using SVGImporter.Utility;
 
 namespace SVGImporter.Elements
 {
-    internal class Path : Element
+    public class Path : Element
     {
         private List<PathCommand> pathCommands;
         private string pathData = string.Empty;
-        private bool isClosedPath;
         private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([\n|\t|\r| |,|\\-])*(\\d+\\.\\d+|\\d+))*|z)";
 
-        public bool IsClosedPath { get => isClosedPath; set => isClosedPath = value; }
+
+        public static SVG CreatePathFromPoints(List<Vector2> points, Vector2 origin, bool useAbsolutePosition, bool isClosed)
+        {
+            List<PathCommand> commands = new List<PathCommand>();
+            MoveCommand moveCommand = new MoveCommand();
+            moveCommand.Point = points[0];
+            moveCommand.IsAbsolute = useAbsolutePosition;
+            commands.Add(moveCommand);
+            for (int i = 1; i < points.Count; i += 4)
+            {
+                CubicCurveCommand cubicCurveCommand = new CubicCurveCommand();
+                cubicCurveCommand.ControlPoint1 = points[i];
+                cubicCurveCommand.ControlPoint2 = points[i + 1];
+                cubicCurveCommand.Point2 = points[i + 2];
+                commands.Add(cubicCurveCommand);
+            }
+            if (isClosed)
+                commands.Add(new ClosePathCommand());
+            Path path = new Path(commands);
+            SVG svg = new SVG(new Vector2(100, 100), new ViewBox(new Vector2(100, 100), origin));
+            Style style = new Style(new List<TagAttribute>());
+            svg.SetChildren(new List<Element> { path, style });
+            return svg;
+        }
+        internal Path(List<PathCommand> pathCommands) : base(new List<TagAttribute>())
+        {
+            this.pathCommands = pathCommands;
+        }
 
         internal Path(List<TagAttribute> attributes) : base(attributes)
         {
             pathCommands = new List<PathCommand>();
-            IsClosedPath = false;
             foreach (var attribute in attributes)
             {
                 if (attribute.attributeName.Equals("d"))
@@ -58,7 +82,7 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {            
             string[] attributesToIgnore = { "d" };
-            return $"<{GetElementName(GetTagType())} d=\"{GetData()}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
+            return $"<{GetElementName(GetTagType())} class=\"st0\" d=\"{GetData()}\" {AttributesToSVG(new List<string>(attributesToIgnore))}/>\n";
         }
 
         public new static string GetElementNameReadable()

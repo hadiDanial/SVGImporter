@@ -14,13 +14,15 @@ namespace SVGImporter.Elements
         private bool defined = false;
         public ViewBox(Vector2 size, Vector2 origin)
         {
-            this.size = size;
-            this.origin = origin;
+            this.Size = size;
+            this.Origin = origin;
             defined = true;
         }
         public ViewBox() { }
 
         public bool Defined { get => defined; }
+        public Vector2 Size { get => size; set => size = value; }
+        public Vector2 Origin { get => origin; set => origin = value; }
 
         //public Vector2 GetPoint(Vector2 point)
         //{
