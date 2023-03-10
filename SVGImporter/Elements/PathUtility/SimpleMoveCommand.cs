@@ -1,7 +1,7 @@
 ﻿
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class SimpleMoveCommand : PathCommand
+    public class SimpleMoveCommand : PathCommand
     {
         private float value;
         private SimpleMoveType movementType;
@@ -26,7 +26,7 @@ namespace SVGImporter.Elements.PathUtility
             else
                 return $"{GetCommandCharRelativeOrAbsolute(VERTICAL)}{value}";
         }
-        internal enum SimpleMoveType
+        public enum SimpleMoveType
         {
             Horizontal, Vertical
         }

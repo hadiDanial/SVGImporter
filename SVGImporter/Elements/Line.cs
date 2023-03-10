@@ -4,9 +4,12 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Line : Element
+    public class Line : Element
     {
         private Vector2 point1, point2;
+
+        public Vector2 Point1 { get => point1; set => point1 = value; }
+        public Vector2 Point2 { get => point2; set => point2 = value; }
 
         protected Line(Vector2 point1, Vector2 point2, List<TagAttribute> attributes) : base(attributes)
         {
@@ -49,7 +52,7 @@ namespace SVGImporter.Elements
             return $"{GetElementNameReadable()}: {point1}, {point2}";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Line;
         }

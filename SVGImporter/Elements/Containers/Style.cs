@@ -19,7 +19,7 @@ namespace SVGImporter.Elements.Containers
             return "type=\"text/css\"";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Style;
         }

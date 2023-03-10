@@ -14,6 +14,7 @@ namespace SVGImporter.Elements
         private string pathData = string.Empty;
         private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([\n|\t|\r| |,|\\-])*(\\d+\\.\\d+|\\d+))*|z)";
 
+        public List<PathCommand> PathCommands { get => pathCommands; set => pathCommands = value; }
 
         public static SVG CreatePathFromPoints(List<Vector2> points, Vector2 origin, bool useAbsolutePosition, bool isClosed)
         {
@@ -115,7 +116,7 @@ namespace SVGImporter.Elements
             return "Path: " + GetData();
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Path;
         }

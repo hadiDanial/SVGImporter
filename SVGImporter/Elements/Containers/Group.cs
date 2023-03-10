@@ -23,7 +23,7 @@ namespace SVGImporter.Elements.Containers
             return String.Empty;
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.G;
         }

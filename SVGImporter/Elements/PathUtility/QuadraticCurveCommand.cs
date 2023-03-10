@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class QuadraticCurveCommand : PathCommand
+    public class QuadraticCurveCommand : PathCommand
     {
         private Vector2 controlPoint;
         private Vector2 point2;

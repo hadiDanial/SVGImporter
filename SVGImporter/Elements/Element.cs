@@ -5,16 +5,24 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
+    [Serializable]
     public abstract class Element
     {
-        protected List<TagAttribute> attributes;
+        private List<TagAttribute> attributes;
         protected Style style;
-        protected string elementNameReadable, elementName, elementId;
+        protected string elementNameReadable;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
+        private string elementName;
+        private string elementId;
         protected const string OPENING_TAG = "<";
         protected const string CLOSING_TAG = ">";
         protected const string SINGLE_TAG_PATTERN = "<\\w+( ([^<])*?)+? *?(\\/|\\\\)>";
         protected const string GROUP_TAG_PATTERN = "<(\\w+)( (\\r| |\\t|\\n|.)*?)+>((\\r| |\\t|\\n|.)*?)<(\\\\|\\/)\\1+>";
+
+        public string ElementName { get => elementName; set => elementName = value; }
+        public List<TagAttribute> Attributes { get => attributes; set => attributes = value; }
+        public string ElementId { get => elementId; set => elementId = value; }
+
         protected Element(List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
@@ -25,7 +33,7 @@ namespace SVGImporter.Elements
 
         private string GetCustomName(List<TagAttribute> attributes)
         {
-            string name = GetElementName(GetTagType());
+            string name = string.Empty;
             for (int i = 0; i < attributes.Count; i++)
             {
                 if (attributes[i].attributeName.Equals("id"))
@@ -143,7 +151,7 @@ namespace SVGImporter.Elements
             return TagAttribute.AttributesToSVG(attributes, attributesToIgnore);
         }
 
-        protected abstract TagType GetTagType();
+        public abstract TagType GetTagType();
 
     }
 }

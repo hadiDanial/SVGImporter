@@ -55,7 +55,7 @@ namespace SVGImporter.Elements.Containers
             return "SVG";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.SVG;
         }

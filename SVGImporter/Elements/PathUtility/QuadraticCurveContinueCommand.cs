@@ -2,7 +2,7 @@
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class QuadraticCurveContinueCommand : PathCommand
+    public class QuadraticCurveContinueCommand : PathCommand
     {
         private Vector2 point2;
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Circle : Element
+    public class Circle : Element
     {
         private Vector2 center;
         private float radius;
@@ -51,7 +51,7 @@ namespace SVGImporter.Elements
             return "Circle";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Circle;
         }
