@@ -27,17 +27,9 @@ namespace SVGImporter.Elements
             for (int i = 1; i < points.Count; i += 3)
             {
                 CubicCurveCommand cubicCurveCommand = new CubicCurveCommand();
-                cubicCurveCommand.ControlPoint1 = points[i]+ prevPoint;
-                cubicCurveCommand.ControlPoint2 = points[i + 2] - points[i + 1] ;
-                // Control point locations:
-                // Circle circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
-                // circle.Center = points[i];
-                // circle.Radius = 10;
-                // elements.Add(circle);
-                // circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
-                // circle.Center = points[i+1];
-                // circle.Radius = 10;
-                // elements.Add(circle); 
+                cubicCurveCommand.ControlPoint1 = points[i];
+                cubicCurveCommand.ControlPoint2 = points[i + 1];
+                //AddAnchorPointIndicators(points, elements, i);
                 cubicCurveCommand.Point2 = points[i + 2];
                 cubicCurveCommand.IsAbsolute = true;
                 commands.Add(cubicCurveCommand);
@@ -52,6 +44,20 @@ namespace SVGImporter.Elements
             svg.SetChildren(elements);
             return svg;
         }
+
+        private static void AddAnchorPointIndicators(List<Vector2> points, List<Element> elements, int i)
+        {
+            // Control point locations:
+            Circle circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
+            circle.Center = points[i];
+            circle.Radius = 10;
+            elements.Add(circle);
+            circle = (Circle)Element.CreateElement(TagType.Circle, new List<TagAttribute>(), "");
+            circle.Center = points[i + 1];
+            circle.Radius = 10;
+            elements.Add(circle);
+        }
+
         internal Path(List<PathCommand> pathCommands) : base(new List<TagAttribute>())
         {
             this.pathCommands = pathCommands;
