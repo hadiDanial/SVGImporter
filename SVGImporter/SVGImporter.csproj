@@ -20,4 +20,8 @@
     </None>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetDir)$(TargetName).dll&quot;  &quot;P:\Unity\Splines\Assets\_HadiSplines\&quot;" />
+  </Target>
+
 </Project>
