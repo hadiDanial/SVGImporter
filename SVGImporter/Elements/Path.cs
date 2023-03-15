@@ -12,7 +12,7 @@ namespace SVGImporter.Elements
     {
         private List<PathCommand> pathCommands;
         private string pathData = string.Empty;
-        private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([\n|\t|\r| |,|\\-])*(\\d+\\.\\d+|\\d+))*|z)";
+        private const string COMMAND_REGEX_PATTERN = "(([mzlhvcsqta]|[MZLHVCSQTA])( *)(\\d+\\.\\d+|\\d+)(([\n|\t|\r| |,|\\-])*(\\d+\\.\\d+|\\d+))*|z|Z)";
 
         public List<PathCommand> PathCommands { get => pathCommands; set => pathCommands = value; }
 

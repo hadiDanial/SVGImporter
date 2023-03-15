@@ -7,7 +7,7 @@ namespace SVGImporter.Elements.PathUtility
         private SimpleMoveType movementType;
 
         public float Value { get => value; set => this.value = value; }
-        internal SimpleMoveType MovementType { get => movementType; set => movementType = value; }
+        public SimpleMoveType MovementType { get => movementType; set => movementType = value; }
 
         public SimpleMoveCommand(string data, bool isAbsolute, SimpleMoveType movementType) : base(data, isAbsolute)
         {
