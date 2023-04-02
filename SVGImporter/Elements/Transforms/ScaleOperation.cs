@@ -15,5 +15,9 @@ namespace SVGImporter.Elements.Transforms
         {
             transform.localScale = Vector3.Scale(transform.localScale, Scale);
         }
+        public override string ToString()
+        {
+            return $"Scale: {Scale.ToString()}";
+        }
     }
 }

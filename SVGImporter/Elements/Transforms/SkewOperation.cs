@@ -26,5 +26,10 @@ namespace SVGImporter.Elements.Transforms
             transform.rotation = Quaternion.LookRotation(newMatrix.GetColumn(2), newMatrix.GetColumn(1));
             transform.localScale = newMatrix.lossyScale;
         }
+        
+        public override string ToString()
+        {
+            return $"Skew: ({AngleX}, {AngleY})";
+        }
     }
 }

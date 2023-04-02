@@ -15,5 +15,10 @@ namespace SVGImporter.Elements.Transforms
         {
             transform.Translate(Translation);
         }
+        
+        public override string ToString()
+        {
+            return $"Translate: {Translation.ToString()}";
+        }
     }
 }

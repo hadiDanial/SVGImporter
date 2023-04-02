@@ -13,10 +13,10 @@ namespace SVGImporter.Elements.Transforms
 
         public MatrixOperation(float a, float b, float c, float d, float e, float f)
         {
-            Matrix4x4 matrix = new Matrix4x4(
-                new Vector4(a, c, 0, e),
-                new Vector4(b, d, 0, f),
-                new Vector4(0, 0, 1, 0),
+            Matrix = new Matrix4x4(
+                new Vector4(a, b, 0, 0),
+                new Vector4(c, d, 0, 0),
+                new Vector4(e, f, 1, 0),
                 new Vector4(0, 0, 0, 1)
             );
         }
@@ -28,6 +28,11 @@ namespace SVGImporter.Elements.Transforms
             transform.position = newMatrix.GetColumn(3);
             transform.rotation = Quaternion.LookRotation(newMatrix.GetColumn(2), newMatrix.GetColumn(1));
             transform.localScale = newMatrix.lossyScale;
+        }
+
+        public override string ToString()
+        {
+            return $"Matrix: {Matrix.ToString()}";
         }
     }
 }
