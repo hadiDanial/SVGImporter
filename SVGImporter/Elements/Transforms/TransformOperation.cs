@@ -4,7 +4,17 @@ namespace SVGImporter.Elements.Transforms
 {
     public abstract class TransformOperation
     {
+        /// <summary>
+        /// Apply the transform operation to a Vector2 point.
+        /// </summary>
+        /// <param name="point">The point that this operation will be applied to.</param>
+        /// <returns>The modified point.</returns>
+        public abstract Vector2 ApplyTo(Vector2 point);
+        /// <summary>
+        /// Apply the transform operation to a transform.
+        /// </summary>
+        /// <param name="transform">The transform that this operation will be applied to.</param>
         public abstract void ApplyTo(Transform transform);
-        public abstract string ToString();
+        public abstract override string ToString();
     }
 }

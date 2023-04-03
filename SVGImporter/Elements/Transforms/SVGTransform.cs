@@ -13,11 +13,33 @@ namespace SVGImporter.Elements.Transforms
             operations = new List<TransformOperation>();
         }
 
+        /// <summary>
+        /// Add an operation to the Transform Operations list.
+        /// </summary>
+        /// <param name="operation">Transform Operation to be added.</param>
         public void AddOperation(TransformOperation operation)
         {
             operations.Add(operation);
         }
 
+        /// <summary>
+        /// Apply all the Transform Operations to a point and return the result.
+        /// </summary>
+        /// <param name="point">The point to be transformed.</param>
+        /// <returns>Transformed point after all operations have been performed.</returns>
+        public Vector2 ApplyTo(Vector2 point)
+        {
+            foreach (TransformOperation operation in operations)
+            {
+                point = operation.ApplyTo(point);
+            }
+            return point;
+        } 
+        
+        /// <summary>
+        /// Apply all the Transform Operations to a transform.
+        /// </summary>
+        /// <param name="transform">The transform that the operations will be applied to.</param>
         public void ApplyTo(Transform transform)
         {
             foreach (TransformOperation operation in operations)

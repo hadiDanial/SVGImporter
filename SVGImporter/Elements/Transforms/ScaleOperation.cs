@@ -11,6 +11,12 @@ namespace SVGImporter.Elements.Transforms
             Scale = (sx.Equals(sy)) ? new Vector3(sx, sx, sx) : new Vector3(sx, sy, 1f);
         }
 
+        public override Vector2 ApplyTo(Vector2 point)
+        {
+            point = new Vector3(point.x, point.y, 1);
+            return Vector3.Scale(point, Scale);
+        }
+
         public override void ApplyTo(Transform transform)
         {
             transform.localScale = Vector3.Scale(transform.localScale, Scale);

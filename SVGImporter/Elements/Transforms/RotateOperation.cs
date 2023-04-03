@@ -16,6 +16,11 @@ namespace SVGImporter.Elements.Transforms
             Rotation = translation.rotation * rotation * inverseTranslation.rotation;
         }
 
+        public override Vector2 ApplyTo(Vector2 point)
+        {
+            return Rotation * point;
+        }
+
         public override void ApplyTo(Transform transform)
         {
             transform.rotation *= Rotation;

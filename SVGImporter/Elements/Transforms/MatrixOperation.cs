@@ -21,6 +21,11 @@ namespace SVGImporter.Elements.Transforms
             );
         }
 
+        public override Vector2 ApplyTo(Vector2 point)
+        {
+            return Matrix.MultiplyPoint(point);
+        }
+
         public override void ApplyTo(Transform transform)
         {
             Matrix4x4 currentMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
