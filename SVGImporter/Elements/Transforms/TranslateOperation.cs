@@ -16,11 +16,16 @@ namespace SVGImporter.Elements.Transforms
             return point + Translation;
         }
 
-        public override void ApplyTo(Transform transform)
+        public override void ApplyTo(Transform transform, float scaleFactor = 1f)
         {
-            transform.Translate(Translation);
+            transform.position += (Vector3)(Translation * scaleFactor);
         }
-        
+
+        public override bool IsAppliedToTransform()
+        {
+            return true;
+        }
+
         public override string ToString()
         {
             return $"Translate: {Translation.ToString()}";

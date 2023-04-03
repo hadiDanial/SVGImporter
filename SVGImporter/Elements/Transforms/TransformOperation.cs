@@ -14,7 +14,12 @@ namespace SVGImporter.Elements.Transforms
         /// Apply the transform operation to a transform.
         /// </summary>
         /// <param name="transform">The transform that this operation will be applied to.</param>
-        public abstract void ApplyTo(Transform transform);
+        public abstract void ApplyTo(Transform transform, float scaleFactor = 1f);
+
+        /// <summary>
+        /// Returns true if this operation should be applied to a transform and false if it should be applied to a point.
+        /// </summary>
+        public abstract bool IsAppliedToTransform();
         public abstract override string ToString();
     }
 }

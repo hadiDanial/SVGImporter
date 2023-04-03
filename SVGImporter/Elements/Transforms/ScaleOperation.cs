@@ -17,10 +17,16 @@ namespace SVGImporter.Elements.Transforms
             return Vector3.Scale(point, Scale);
         }
 
-        public override void ApplyTo(Transform transform)
+        public override void ApplyTo(Transform transform, float scaleFactor = 1f)
         {
-            transform.localScale = Vector3.Scale(transform.localScale, Scale);
+            transform.localScale = Vector3.Scale(transform.localScale, Scale * scaleFactor);
         }
+        
+        public override bool IsAppliedToTransform()
+        {
+            return true;
+        }
+        
         public override string ToString()
         {
             return $"Scale: {Scale.ToString()}";

@@ -8,6 +8,8 @@ namespace SVGImporter.Elements.Transforms
     {
         private List<TransformOperation> operations;
 
+        public List<TransformOperation> Operations => operations;
+
         public SVGTransform()
         {
             operations = new List<TransformOperation>();
