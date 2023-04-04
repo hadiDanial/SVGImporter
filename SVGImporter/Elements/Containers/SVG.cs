@@ -39,6 +39,11 @@ namespace SVGImporter.Elements.Containers
             this.viewBox = viewBox;
             this.size = new Vector2(width, height);
         }
+        public SVG(Vector2 size, ViewBox viewBox) : base(new List<TagAttribute>())
+        {
+            this.size = size;
+            this.viewBox = viewBox;
+        }
 
         public override string ElementToSVGTag()
         {
@@ -50,9 +55,14 @@ namespace SVGImporter.Elements.Containers
             return "SVG";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.SVG;
+        }
+
+        protected override string GetCustomData()
+        {
+            return $"width=\"{size.x}\" height=\"{size.y}\" viewBox=\"{viewBox.Origin.x} {viewBox.Origin.y} {viewBox.Size.x} {viewBox.Size.y}\"";
         }
     }
 }

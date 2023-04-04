@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Ellipse : Element
+    public class Ellipse : Element
     {
         private Vector2 center;
         private Vector2 radius;
+
+        public Vector2 Center { get => center; set => center = value; }
+        public Vector2 Radius { get => radius; set => radius = value; }
 
         protected Ellipse(Vector2 center, Vector2 radius, List<TagAttribute> attributes) : base(attributes)        {
             this.center = center;
@@ -52,7 +55,7 @@ namespace SVGImporter.Elements
             return "Ellipse";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Ellipse;
         }

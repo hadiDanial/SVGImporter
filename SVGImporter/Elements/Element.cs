@@ -2,30 +2,138 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using SVGImporter.Elements.Transforms;
 
 namespace SVGImporter.Elements
 {
+    [Serializable]
     public abstract class Element
     {
-        protected List<TagAttribute> attributes;
+        private List<TagAttribute> attributes;
         protected Style style;
-        protected string elementNameReadable, elementName, elementId;
+        protected string elementNameReadable;
         private static Dictionary<string, TagType> tagTypeStringToEnum = new Dictionary<string, TagType>();
+        private string elementName;
+        private string elementId;
         protected const string OPENING_TAG = "<";
         protected const string CLOSING_TAG = ">";
         protected const string SINGLE_TAG_PATTERN = "<\\w+( ([^<])*?)+? *?(\\/|\\\\)>";
         protected const string GROUP_TAG_PATTERN = "<(\\w+)( (\\r| |\\t|\\n|.)*?)+>((\\r| |\\t|\\n|.)*?)<(\\\\|\\/)\\1+>";
+        private SVGTransform transform;
+
+        public static Dictionary<string, TagType> TagTypeStringToEnum
+        {
+            get {
+                if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
+                return tagTypeStringToEnum;
+            }
+        }
+
+        public SVGTransform Transform => transform;
+
+        public string ElementName { get => elementName; set => elementName = value; }
+        public List<TagAttribute> Attributes { get => attributes; set => attributes = value; }
+        public string ElementId { get => elementId; set => elementId = value; }
+
         protected Element(List<TagAttribute> attributes)
         {
             elementNameReadable = GetElementNameReadable();
             elementName = GetElementName(GetTagType());
             elementId = GetCustomName(attributes);
             this.attributes = attributes;
+            GenerateTransform();
         }
+
+        /// <summary>
+        /// Parses the transformation attributes of the element and generates the corresponding transformation operations.
+        /// </summary>
+        private void GenerateTransform()
+        {
+            transform = new SVGTransform();
+            foreach (TagAttribute attribute in this.attributes)
+            {
+                if (attribute.attributeName.Equals("transform"))
+                {
+                    string transformOptions = attribute.attributeValue;
+                    Regex regex = new Regex(@"(\w+)\s*\(\s*([^\)]+)\s*\)");
+                    MatchCollection matches = regex.Matches(transformOptions);
+
+                    foreach (Match match in matches)
+                    {
+                        string functionName = match.Groups[1].Value;
+                        string argumentString = match.Groups[2].Value;
+
+                        // Split the argument string into individual arguments
+                        string[] arguments = argumentString.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        // Process the transform function based on its name and arguments
+                        switch (functionName)
+                        {
+                            case "translate":
+                            {
+                                // Process a translation transform with arguments (tx, ty)
+                                float tx = float.Parse(arguments[0]);
+                                float ty = arguments.Length > 1 ? float.Parse(arguments[1]) : 0.0f;
+                                transform.AddOperation(new TranslateOperation(tx, ty));
+                                break;
+                            }
+
+                            case "rotate":
+                            {
+                                // Process a rotation transform with arguments (angle, cx, cy)
+                                float angle = float.Parse(arguments[0]);
+                                float cx = arguments.Length > 1 ? float.Parse(arguments[1]) : 0.0f;
+                                float cy = arguments.Length > 2 ? float.Parse(arguments[2]) : 0.0f;
+                                transform.AddOperation(new RotateOperation(angle, cx, cy));
+                                break;
+                            }
+
+                            case "scale":
+                            {
+                                // Process a scale transform with arguments (sx, sy)
+                                float sx = float.Parse(arguments[0]);
+                                float sy = arguments.Length > 1 ? float.Parse(arguments[1]) : sx;
+                                transform.AddOperation(new ScaleOperation(sx, sy));
+                                break;
+                            }
+
+                            case "matrix":
+                            {
+                                // Process a matrix transform with arguments (a, b, c, d, e, f)
+                                float a = float.Parse(arguments[0]);
+                                float b = float.Parse(arguments[1]);
+                                float c = float.Parse(arguments[2]);
+                                float d = float.Parse(arguments[3]);
+                                float e = float.Parse(arguments[4]);
+                                float f = float.Parse(arguments[5]);
+                                transform.AddOperation(new MatrixOperation(a, b, c, d, e, f));
+                                break;
+                            }
+                            case "skewX":
+                            {
+                                // Process a skewX transform with a single angle value in degrees
+                                float skewXAngle = float.Parse(arguments[0]);
+                                transform.AddOperation(new SkewOperation(skewXAngle, 0));
+                                break;
+                            }
+
+                            case "skewY":
+                            {                                
+                                // Process a skewY transform with a single angle value in degrees
+                                float skewYAngle = float.Parse(arguments[0]);
+                                transform.AddOperation(new SkewOperation(0, skewYAngle));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         private string GetCustomName(List<TagAttribute> attributes)
         {
-            string name = GetElementName(GetTagType());
+            string name = string.Empty;
             for (int i = 0; i < attributes.Count; i++)
             {
                 if (attributes[i].attributeName.Equals("id"))
@@ -34,7 +142,9 @@ namespace SVGImporter.Elements
             return name;
         }
 
-
+        /// <summary>
+        /// Factory method that creates a new instance of a subclass of Element based on the specified TagType and attributes.
+        /// </summary>
         internal static Element CreateElement(TagType type, List<TagAttribute> attributes, string localName)
         {
             switch (type)
@@ -80,10 +190,10 @@ namespace SVGImporter.Elements
             tagTypeStringToEnum.Add("svg", TagType.SVG);
             tagTypeStringToEnum.Add("style", TagType.Style);
         }
+        
         public static TagType GetTypeByName(string name)
         {
-            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
-            if(tagTypeStringToEnum.ContainsKey(name))
+            if(TagTypeStringToEnum.ContainsKey(name))
                 return tagTypeStringToEnum[name];
             return TagType.Unknown;
         }
@@ -92,8 +202,7 @@ namespace SVGImporter.Elements
         /// </summary>
         public static string GetElementName(TagType tagType)
         {
-            if (tagTypeStringToEnum == null || tagTypeStringToEnum.Count == 0) SetupDictionary();
-            foreach (string key in tagTypeStringToEnum.Keys)
+            foreach (string key in TagTypeStringToEnum.Keys)
             {
                 if (tagTypeStringToEnum[key] == tagType) return key;
             }
@@ -143,7 +252,7 @@ namespace SVGImporter.Elements
             return TagAttribute.AttributesToSVG(attributes, attributesToIgnore);
         }
 
-        protected abstract TagType GetTagType();
+        public abstract TagType GetTagType();
 
     }
 }

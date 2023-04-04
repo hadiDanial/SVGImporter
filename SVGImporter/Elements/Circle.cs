@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Circle : Element
+    public class Circle : Element
     {
         private Vector2 center;
         private float radius;
+
+        public Vector2 Center { get => center; set => center = value; }
+        public float Radius { get => radius; set => radius = value; }
 
         protected Circle(Vector2 center, float radius, List<TagAttribute> attributes) : base(attributes)
         {
@@ -48,7 +51,7 @@ namespace SVGImporter.Elements
             return "Circle";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Circle;
         }

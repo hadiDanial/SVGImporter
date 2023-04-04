@@ -3,11 +3,15 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Rect : Element
+    public class Rect : Element
     {
         private Vector2 position;
         private Vector2 size;
         private Vector2 cornerRadius;
+
+        public Vector2 Position { get => position; set => position = value; }
+        public Vector2 Size { get => size; set => size = value; }
+        public Vector2 CornerRadius { get => cornerRadius; set => cornerRadius = value; }
 
         protected Rect(List<TagAttribute> attributes, Vector2 position, Vector2 size, Vector2 cornerRadius) : base(attributes)
         {
@@ -59,7 +63,7 @@ namespace SVGImporter.Elements
             return "Rect";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Rect;
         }

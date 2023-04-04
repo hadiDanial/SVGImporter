@@ -1,6 +1,6 @@
 ﻿namespace SVGImporter.Elements.PathUtility
 {
-    internal class ClosePathCommand : PathCommand
+    public class ClosePathCommand : PathCommand
     {
         internal ClosePathCommand(string data, bool isAbsolute) : base(data, isAbsolute)
         {

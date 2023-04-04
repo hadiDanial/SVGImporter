@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class CubicCurveCommand : PathCommand
+    public class CubicCurveCommand : PathCommand
     {
         private Vector2 controlPoint1, controlPoint2;
         private Vector2 point2;

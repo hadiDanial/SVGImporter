@@ -2,7 +2,7 @@
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class ArcCommand : PathCommand
+    public class ArcCommand : PathCommand
     {
         private Vector2 radius, endPoint;
         private float rotation;

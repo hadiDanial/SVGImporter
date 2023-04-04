@@ -2,7 +2,7 @@
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal class LineCommand : PathCommand
+    public class LineCommand : PathCommand
     {
         private Vector2 point;
         public Vector2 Point { get => point; set => point = value; }

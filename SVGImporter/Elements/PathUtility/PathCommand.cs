@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SVGImporter.Elements.PathUtility
 {
-    internal abstract class PathCommand
+    public abstract class PathCommand
     {
         private bool isAbsolute;
         protected string data;
@@ -28,7 +28,7 @@ namespace SVGImporter.Elements.PathUtility
         protected const char QUADRATIC_CURVE_CONTINUE = 'T';
         protected const char ARC = 'A';
 
-        protected PathCommand(string data, bool isAbsolute)
+        public PathCommand(string data, bool isAbsolute)
         {
             this.isAbsolute = isAbsolute;
             this.data = data;

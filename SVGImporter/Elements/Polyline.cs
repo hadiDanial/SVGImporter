@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Polyline : Element
+    public class Polyline : Element
     {
-        protected List<Vector2> points;
+        private List<Vector2> points;
         protected const string PATTERN = "([0-9]+)(\\.?)([0-9]*),([0-9]+)(\\.?)([0-9]*)";
+
+        public List<Vector2> Points { get => points; set => points = value; }
+
         protected Polyline(List<TagAttribute> attributes, List<Vector2> points) : base(attributes)
         {
             this.points = points;
@@ -58,7 +61,7 @@ namespace SVGImporter.Elements
             return $"{GetElementNameReadable()}: {points}";
         }
 
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Polyline;
         }

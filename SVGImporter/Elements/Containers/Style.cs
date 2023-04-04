@@ -8,10 +8,18 @@ namespace SVGImporter.Elements.Containers
 {
     public class Style : ParentElement
     {
+        private const string DEFAULT_STYLE = ".st0{fill:none;stroke:#000000;stroke-miterlimit:10;}";
         public Style(List<TagAttribute> attributes) : base(attributes)
         {
+            value = DEFAULT_STYLE;
         }
-        protected override TagType GetTagType()
+
+        protected override string GetCustomData()
+        {
+            return "type=\"text/css\"";
+        }
+
+        public override TagType GetTagType()
         {
             return TagType.Style;
         }

@@ -38,9 +38,11 @@ namespace SVGImporter.Elements.Containers
 
         protected virtual string GetStartTag()
         {
-            return $"<{GetElementName(GetTagType())} {AttributesToSVG(null)}>";
+            return $"<{GetElementName(GetTagType())} {GetCustomData()} {AttributesToSVG(null)}>";
 
         }
+
+        protected abstract string GetCustomData();
 
         protected virtual string GetEndTag()
         {

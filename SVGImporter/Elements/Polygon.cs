@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SVGImporter.Elements
 {
-    internal class Polygon : Polyline
+    public class Polygon : Polyline
     {
         protected Polygon(List<TagAttribute> attributes, List<Vector2> points) : base(attributes, points)
         {
@@ -19,13 +19,13 @@ namespace SVGImporter.Elements
         public override string ElementToSVGTag()
         {
             string[] attributesToIgnore = { "points" };
-            return $"<{GetElementName(TagType.Polygon)} points=\"{Vector2.ToSVG(points)}\" {AttributesToSVG(new List<string>(attributesToIgnore))} />\n";
+            return $"<{GetElementName(TagType.Polygon)} points=\"{Vector2.ToSVG(Points)}\" {AttributesToSVG(new List<string>(attributesToIgnore))} />\n";
         }
         public new static string GetElementNameReadable()
         {
             return "Polygon";
         }
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Polygon;
         }

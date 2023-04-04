@@ -17,13 +17,13 @@ namespace SVGImporter.Elements.Containers
         }
         protected override string GetStartTag()
         {
-            return $"<{tagName} {AttributesToSVG(null)}>";
+            return $"<{tagName} {AttributesToSVG(new List<string>())}>";
         }
         protected override string GetEndTag()
         {
             return $"</{tagName}>";
         }
-        protected override TagType GetTagType()
+        public override TagType GetTagType()
         {
             return TagType.Unknown;
         }
