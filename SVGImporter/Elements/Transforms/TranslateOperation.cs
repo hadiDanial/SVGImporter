@@ -8,7 +8,7 @@ namespace SVGImporter.Elements.Transforms
 
         public TranslateOperation(float tx, float ty)
         {
-            Translation = new Vector2(tx, ty);
+            Translation = new Vector2(tx, -ty);
         }
 
         public override Vector2 ApplyTo(Vector2 point)
@@ -18,7 +18,7 @@ namespace SVGImporter.Elements.Transforms
 
         public override void ApplyTo(Transform transform, float scaleFactor = 1f)
         {
-            transform.position += (Vector3)(Translation * scaleFactor);
+            transform.Translate((Vector3)(Translation * scaleFactor), Space.Self);
         }
 
         public override bool IsAppliedToTransform()
