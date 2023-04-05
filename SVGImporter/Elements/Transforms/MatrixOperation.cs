@@ -16,8 +16,8 @@ namespace SVGImporter.Elements.Transforms
             Matrix = new Matrix4x4(
                 new Vector4(a, b, 0, 0),
                 new Vector4(c, d, 0, 0),
-                new Vector4(e, f, 1, 0),
-                new Vector4(0, 0, 0, 1)
+                new Vector4(0, 0, 1, 0),
+                new Vector4(e, f, 0, 1)
             );
         }
 
