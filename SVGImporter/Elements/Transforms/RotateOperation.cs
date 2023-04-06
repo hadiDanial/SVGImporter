@@ -20,6 +20,7 @@ namespace SVGImporter.Elements.Transforms
 
         public override void ApplyTo(Transform transform, float scaleFactor = 1f)
         {
+            Vector3 originalPosition = transform.position;
             Transform originalParent = transform.parent;
             Transform pivot = (new GameObject("Rotation Pivot")).transform;
             transform.SetParent(pivot);
@@ -27,7 +28,8 @@ namespace SVGImporter.Elements.Transforms
             transform.position = Rotation * (transform.position - pivotPoint) + pivotPoint;
             transform.rotation = Rotation * transform.rotation;
             transform.SetParent(originalParent);
-            GameObject.Destroy(pivot.gameObject);
+            transform.position = originalPosition;
+            GameObject.DestroyImmediate(pivot.gameObject);
         }
         
         public override bool IsAppliedToTransform()
