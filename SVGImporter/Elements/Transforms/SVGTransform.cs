@@ -36,17 +36,18 @@ namespace SVGImporter.Elements.Transforms
                 point = operation.ApplyTo(point);
             }
             return point;
-        } 
-        
+        }
+
         /// <summary>
         /// Apply all the Transform Operations to a transform.
         /// </summary>
         /// <param name="transform">The transform that the operations will be applied to.</param>
-        public void ApplyTo(Transform transform)
+        /// <param name="scaleFactor">A scale factor to apply to the transformations.</param>
+        public void ApplyTo(Transform transform, float scaleFactor = 1f)
         {
             foreach (TransformOperation operation in operations)
             {
-                operation.ApplyTo(transform);
+                operation.ApplyTo(transform, scaleFactor);
             }
         }
 
